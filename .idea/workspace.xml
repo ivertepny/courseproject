@@ -4,8 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d956807-7e4e-4177-a5a3-3c1a636bf26b" name="Changes" comment="First step">
+    <list default="true" id="4d956807-7e4e-4177-a5a3-3c1a636bf26b" name="Changes" comment="added static folder">
+      <change afterPath="$PROJECT_DIR$/users/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/templates/users/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/templates/users/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/templates/users/registration.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/postcards_shop.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/postcards_shop.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postcards_shop/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/postcards_shop/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products/templates/products/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/products/templates/products/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products/templates/products/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/products/templates/products/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,18 +37,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ivertepny"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ivertepny&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ivertepny/courseproject.git",
-    "accountId": "a6fb4c90-52eb-4423-87e7-2696fbc4dbd8"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ivertepny/courseproject.git&quot;,
+    &quot;accountId&quot;: &quot;a6fb4c90-52eb-4423-87e7-2696fbc4dbd8&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="showPreview" value="true" />
   </component>
@@ -76,6 +87,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\User\Desktop\Hillel\Course_project\postcards_shop\users\templates\users" />
       <recent name="D:\User\Desktop\Hillel\Course_project\postcards_shop\products\fixtures" />
     </key>
   </component>
@@ -160,7 +172,13 @@
       <workItem from="1722683997373" duration="4571000" />
       <workItem from="1722688597759" duration="229000" />
       <workItem from="1722694913988" duration="293000" />
-      <workItem from="1722758313836" duration="6616000" />
+      <workItem from="1722758313836" duration="8999000" />
+      <workItem from="1722785319818" duration="156000" />
+      <workItem from="1722785529945" duration="195000" />
+      <workItem from="1722785910307" duration="224000" />
+      <workItem from="1722786647075" duration="91000" />
+      <workItem from="1722786906401" duration="1940000" />
+      <workItem from="1722789027272" duration="5055000" />
     </task>
     <task id="LOCAL-00001" summary="First step">
       <option name="closed" value="true" />
@@ -170,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722763313074</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added static folder">
+      <option name="closed" value="true" />
+      <created>1722765764230</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1722765764230</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,7 +207,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First step" />
-    <option name="LAST_COMMIT_MESSAGE" value="First step" />
+    <MESSAGE value="added static folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="added static folder" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/postcards_shop$models.coverage" NAME="models Coverage Results" MODIFIED="1722760877421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/products" />
