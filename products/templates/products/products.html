@@ -103,7 +103,10 @@
 
                                 </div>
                                 <div class="card-footer text-center">
-                                    <button type="button" class="btn btn-outline-success">Відправити до кошика</button>
+                                    <a class="btn btn-outline-success" href="{% url 'products:basket_add' product.id %}">
+                                        Відправити до кошика
+                                    </a>
+                              
                                 </div>
                             </div>
                         </div>
