@@ -18,26 +18,33 @@
             background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="blue" viewBox="0 0 8 8"%3E%3Cpath d="M0 0v8l4-4-4-4z" /%3E%3C/svg%3E');
         }
     </style>
-
-
     <div class="container">
-
         <div class="row">
-
             <div class="col-lg-3">
-
-                <h1 class="my-4">Postcards Shop</h1>
+                <h2 class="my-4">
+                    <a href="{% url 'products:index' %}">Postcards Shop</a>
+                </h2>
                 <div class="list-group">
                     {% for category in categories %}
-                        <a href="#" class="list-group-item">{{ category.name }}</a>
+                        <a href="{% url 'products:category' category.id %}" class="list-group-item">
+                            {{ category.name }}
+                        </a>
                     {% endfor %}
                 </div>
-
+            
+                <div class="list-group">
+                    {% for tag in tags.all %}
+{#                     !!!!!!!!   треба доробити для тегів#}
+{#                      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!      #}
+{#                     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  #}
+                        <a href="#" class="list-group-item"> {{ tag.name }} </a> 
+                    {% endfor %}
+                </div>            
+      
             </div>
             <!-- /.col-lg-3 -->
 
             <div class="col-lg-9">
-
                 <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -73,9 +80,7 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-
                 <div class="row">
-
                     {% for product in products %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
@@ -83,7 +88,6 @@
                                     <img class="card-img-top"
                                          src="{{ product.image.url }}"
                                          alt="empty">
-
                                 </a>
                                 <div class="card-body">
                                     <h4 class="card-title">
@@ -93,49 +97,49 @@
 
                                     <p class="card-text">
                                         {% for tag in product.tags.all %}
-                                            {{ tag.name }}{% if not forloop.last%}, {% endif %} 
+                                            {{ tag.name }}{% if not forloop.last %}, {% endif %}
                                             <!-- додає кому -->
                                         {% endfor %}
                                     </p>
 
                                     <!-- <p class="card-text">{{ product.category }}</p> -->
                                     <!-- product.category -->
-
                                 </div>
                                 <div class="card-footer text-center">
-                                    <a class="btn btn-outline-success" href="{% url 'products:basket_add' product.id %}">
+                                    <a class="btn btn-outline-success"
+                                       href="{% url 'products:basket_add' product.id %}">
                                         Відправити до кошика
                                     </a>
-                              
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
-
-
                 </div>
-
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        <li class="page-item {% if not products.has_previous %} disabled {% endif %} ">
+                            <a class="page-link" href="{% if products.has_previous %}
+                                {% url 'products:paginator' products.previous_page_number %} {% else %} # {% endif %}
+                                " tabindex="-1" aria-disabled="true">
+                                Попередня
+                            </a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
+                        {% for page in products.paginator.page_range %}
+                            <li class="page-item"><a class="page-link" href="{% url 'products:paginator' page %}">{{ page }}</a></li>
+                        {% endfor %}
+                        
+                        <li class="page-item {% if not products.has_next %} disabled {% endif %}">
+                            <a class="page-link" href="{% if products.has_next %}
+                                {% url 'products:paginator' products.next_page_number %} {% else %} # {% endif %}">
+                                Наступна
+                            </a>
                         </li>
                     </ul>
                 </nav>
-
             </div>
-
         </div>
-
     </div>
 {% endblock %}
-
 {% block footer %}
     <!-- Footer -->
     <footer class="py-5 bg-dark">
