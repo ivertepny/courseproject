@@ -29,6 +29,11 @@ class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
 
+    # змінюємо назву в адмінці
+    class Meta:
+        verbose_name = 'Листівку'
+        verbose_name_plural = 'Листівки'
+
     def __str__(self):
         return self.name
     # return f" {self.name} | Категорія: {self.category.name}"
