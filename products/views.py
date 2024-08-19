@@ -9,7 +9,6 @@ from products.models import Product, ProductCategory, Tag, Basket
 from users.models import User
 
 
-
 class IndexView(TemplateView):
     template_name = 'products/index.html'
 
@@ -62,6 +61,7 @@ class ProductListView(ListView):
 #         'tags': Tag.objects.all(),
 #     }
 #     return render(request, 'products/products.html', context)
+
 
 
 @login_required  # декоратор для того, щоб не було корзини у незалогінених користувачів
