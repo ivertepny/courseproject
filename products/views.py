@@ -7,22 +7,27 @@ from django.views.generic.list import ListView
 
 from products.models import Product, ProductCategory, Tag, Basket
 from users.models import User
+from common.views import TitleMixin
 
 
-class IndexView(TemplateView):
+# використовуємо Mixin
+class IndexView(TitleMixin, TemplateView):
     template_name = 'products/index.html'
-
-# перевизначаємо метод для додавання Title
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data()
-        context['title'] = 'Store'
-        return context
+    title = 'Store'
 
 
-class ProductListView(ListView):
+# # перевизначаємо метод для додавання Title
+#     def get_context_data(self, **kwargs):
+#         context = super(IndexView, self).get_context_data()
+#         context['title'] = 'Store'
+#         return context
+
+
+class ProductListView(TitleMixin, ListView):
     model = Product
     template_name = 'products/products.html'
     paginate_by = 3
+    title = 'Store - Каталог'
 
     def get_queryset(self):
         queryset = super(ProductListView, self).get_queryset()
@@ -31,10 +36,10 @@ class ProductListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductListView, self).get_context_data()
-        context['title'] = 'Store - Каталог'
         context['categories'] = ProductCategory.objects.all()
         # context['tags'] = Tag.objects.all()
         return context
+
 
 # переходимо з FBV на CBV
 
@@ -61,7 +66,6 @@ class ProductListView(ListView):
 #         'tags': Tag.objects.all(),
 #     }
 #     return render(request, 'products/products.html', context)
-
 
 
 @login_required  # декоратор для того, щоб не було корзини у незалогінених користувачів
