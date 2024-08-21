@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv  # Для файла конфігурації DB .env
 import os  # Для файла конфігурації DB .env
 
+
 load_dotenv()  # Завантаження файлу конфігурвції DB
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -70,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'products.context_processors.baskets',
             ],
         },
     },
