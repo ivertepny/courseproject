@@ -14,7 +14,6 @@ from pathlib import Path
 from dotenv import load_dotenv  # Для файла конфігурації DB .env
 import os  # Для файла конфігурації DB .env
 
-
 load_dotenv()  # Завантаження файлу конфігурвції DB
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    # OAuth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
     # my apps
     'products',
     # 'products.apps.ProductsConfig',
@@ -55,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'postcards_shop.urls'
@@ -159,8 +165,24 @@ DOMAIN_NAME = 'http://127.0.0.1:8000'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = os.getenv('MY_EMAIL_HOST')
-EMAIL_PORT = os.getenv('MY_EMAIL_PORT')
-EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
-EMAIL_USE_SSL = os.getenv('MY_EMAIL_USE_SSL')
+# EMAIL_HOST = os.getenv('MY_EMAIL_HOST')
+# EMAIL_PORT = os.getenv('MY_EMAIL_PORT')
+# EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
+# EMAIL_USE_SSL = os.getenv('MY_EMAIL_USE_SSL')
+
+# робота з OAuth
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1  # GitHub
+
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCOPE': [
+            'user',
+        ],
+    }
+}

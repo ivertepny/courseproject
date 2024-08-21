@@ -40,8 +40,12 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-{#                            <i class="fas fa-user-circle"></i>#}
-                            <img width="25" height="25" src="{{ user.image.url }}" alt="empty">
+                            {% if user.image %}
+                                <img width="25" height="25" src="{{ user.image.url }}" alt="empty">
+                            {% else %}
+                                <i class="fas fa-user-circle"></i>
+                            {% endif %}
+
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li>
@@ -72,12 +76,12 @@
                                         Вийти
                                     </button>
                                 </form>
-                                
-{#                            <a class="dropdown-item" href="{% url 'users:logout' %}">#}
-{#                                    Вийти#}
-{#                            </a>#}
-                                
-                                
+
+                                {#                            <a class="dropdown-item" href="{% url 'users:logout' %}">#}
+                                {#                                    Вийти#}
+                                {#                            </a>#}
+
+
                             </li>
                         </ul>
                     </li>
