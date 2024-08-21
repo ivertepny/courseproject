@@ -12,10 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv  # Для файла конфігурації DB .env
-import os                       # Для файла конфігурації DB .env
+import os  # Для файла конфігурації DB .env
 
-load_dotenv()                   # Завантаження файлу конфігурвції DB
-
+load_dotenv()  # Завантаження файлу конфігурвції DB
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -99,7 +98,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -155,9 +153,12 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # робота з e-mail
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-#для відправки пошти
 DOMAIN_NAME = 'http://127.0.0.1:8000'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = os.getenv('MY_EMAIL_HOST')
+EMAIL_PORT = os.getenv('MY_EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = os.getenv('MY_EMAIL_USE_SSL')
