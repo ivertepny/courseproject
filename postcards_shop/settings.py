@@ -40,11 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
     # OAuth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    # debug_toolbar
+    "debug_toolbar",
     # my apps
     'products',
     # 'products.apps.ProductsConfig',
@@ -61,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "allauth.account.middleware.AccountMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'postcards_shop.urls'
@@ -84,6 +88,22 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'postcards_shop.wsgi.application'
+
+# для debug
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "localhost"
+]
+
+# добіг до Redis
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

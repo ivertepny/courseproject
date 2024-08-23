@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+from django.core.cache import cache
 
 # Create your views here.
 
@@ -30,16 +31,20 @@ class ProductListView(TitleMixin, ListView):
     title = 'Store - Каталог'
 
     def get_queryset(self):
-        queryset = super(ProductListView, self).get_queryset()
+        queryset = super(ProductListView, self).get_queryset().order_by('id')
         category_id = self.kwargs.get('category_id')
         return queryset.filter(category_id=category_id) if category_id else queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductListView, self).get_context_data()
-        context['categories'] = ProductCategory.objects.all()
+        categories = cache.get('categories')
+        if not categories:
+            context['categories'] = ProductCategory.objects.all()
+            cache.set('categories', context['categories'], timeout=30)
+        else:
+            context['categories'] = categories
         # context['tags'] = Tag.objects.all()
         return context
-
 
 # переходимо з FBV на CBV
 
