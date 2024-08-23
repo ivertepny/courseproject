@@ -183,13 +183,14 @@ LOGOUT_REDIRECT_URL = '/'
 # робота з e-mail
 DOMAIN_NAME = 'http://127.0.0.1:8000'
 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-# EMAIL_HOST = os.getenv('MY_EMAIL_HOST')
-# EMAIL_PORT = os.getenv('MY_EMAIL_PORT')
-# EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
-# EMAIL_USE_SSL = os.getenv('MY_EMAIL_USE_SSL')
+EMAIL_HOST = os.getenv('MY_EMAIL_HOST')
+EMAIL_PORT = os.getenv('MY_EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = os.getenv('MY_EMAIL_USE_SSL')
 
 # робота з OAuth
 AUTHENTICATION_BACKENDS = [
@@ -206,3 +207,8 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
     }
 }
+
+# Celery
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
