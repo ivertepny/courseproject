@@ -1,0 +1,51 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+    <!-- Page Content -->
+    <section>
+        <div class="container pt-5">
+            <div class="text-center mt-5">
+                <h1>Замовлення №12345</h1>
+                <div class="orders mt-5">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Назва</th>
+                            <th scope="col">Кількість</th>
+                            <th scope="col">Ціна</th>
+                            <th scope="col">Сума</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">
+                                Листівка №1
+                            </th>
+                            <td>1</td>
+                            <td>6 090,00 грн.</td>
+                            <td>6 090,00 грн.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                Листівка №2
+                            </th>
+                            <td>1</td>
+                            <td>23 725,00 грн.</td>
+                            <td>23 725,00 грн.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                Листівка №3
+                            </th>
+                            <td>2</td>
+                            <td>3 390,00 грн.</td>
+                            <td>6 780,00 грн.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p class="float-right h4 mt-3">ВСЬОГО 36 595,00 грн.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

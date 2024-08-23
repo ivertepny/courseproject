@@ -1,0 +1,54 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+    <!-- Page Content -->
+    <section>
+        <div class="container pt-5">
+            <div class="text-center mt-5">
+                <h1>Замовлення</h1>
+                <div class="orders mt-5">
+                    <table class="table">
+                        <thead>
+                        <tr class="table-light">
+                            <th scope="col">#</th>
+                            <th scope="col">Статус</th>
+                            <th scope="col">Створенний</th>
+                            <th scope="col">ВСЬОГО</th>
+                            <th scope="col">Дія</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Сплачений</td>
+                            <td>21 серпня 24 року</td>
+                            <td>5 070 грн.</td>
+                            <td>
+                                <a href="order.html">подивитись</a>
+                            </td>
+                        </tr>
+                        <tr class="table-success">
+                            <th scope="row">2</th>
+                            <td>Доставлений</td>
+                            <td>16 липня 24 року</td>
+                            <td>4 876 грн.</td>
+                            <td>
+                                <a href="order.html">подивитись</a>
+                            </td>
+                        </tr>
+                        <tr class="table-info">
+                            <th scope="row">3</th>
+                            <td>В дорозі</td>
+                            <td>23 серпня 24 року</td>
+                            <td>9 566 грн.</td>
+                            <td>
+                                <a href="order.html">подивитись</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
