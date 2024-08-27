@@ -52,7 +52,7 @@
                                 <a class="dropdown-item" href="{% url 'users:profile' user.id %}">Профіль</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="orders/orders.html">
+                                <a class="dropdown-item" href="{% url 'orders:orders_list' %}">
                                     Замовлення
                                 </a>
                             </li>
