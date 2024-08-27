@@ -18,7 +18,7 @@ admin.site.register(Tag)
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'quantity', 'category')
-    fields = ('name', 'description', ('price', 'quantity'), 'image', 'category', 'tags')
+    fields = ('name', 'description', ('price', 'quantity'), 'image', 'stripe_product_price_id', 'category', 'tags')
     search_fields = ('name',)
     ordering = ('name',)
 
