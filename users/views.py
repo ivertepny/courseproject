@@ -1,4 +1,4 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 
 from products.models import Basket
-from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, UserPasswordChangeForm
 from users.models import User, EmailVerification
 from common.views import TitleMixin
 
@@ -36,12 +36,13 @@ class UserProfileView(TitleMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('users:profile', args=[self.object.id])
 
+
 # використовуємо context_processors
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(UserProfileView, self).get_context_data()
-    #     context['baskets'] = Basket.objects.filter(user=self.object)
-    #     return context
+# def get_context_data(self, **kwargs):
+#     context = super(UserProfileView, self).get_context_data()
+#     context['baskets'] = Basket.objects.filter(user=self.object)
+#     return context
 
 
 class EmailVerificationView(TitleMixin, TemplateView):
@@ -59,3 +60,8 @@ class EmailVerificationView(TitleMixin, TemplateView):
         else:
             return HttpResponseRedirect(reverse('index'))
 
+
+class UserPasswordChange(PasswordChangeView):
+    form_class = UserPasswordChangeForm
+    success_url = reverse_lazy("users:password_change_done")
+    template_name = "users/password_change_form.html"
