@@ -1,11 +1,17 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
 from django import forms
+from django_recaptcha.fields import ReCaptchaField
 
 from users.models import User
 from users.tasks import send_email_verification
 
 
+class FormWithCaptcha(forms.Form):
+    captcha = ReCaptchaField()
+
+
 class UserLoginForm(AuthenticationForm):
+    captcha = ReCaptchaField()
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control py-4', 'placeholder': "Введіть ім'я користувача"}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={

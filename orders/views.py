@@ -14,6 +14,7 @@ from common.views import TitleMixin
 from orders.forms import OrderForm
 from products.models import Basket
 from orders.models import Order
+from telegrambot.sendmessage import send_telegram
 
 # Stripe
 
@@ -100,6 +101,7 @@ def stripe_webhook_view(request):
 
         # Fulfill the purchase...
         fulfill_order(session)
+        send_telegram()
 
     # Passed signature verification
     return HttpResponse(status=200)
