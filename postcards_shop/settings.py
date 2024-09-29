@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'sslserver',
     'django_recaptcha',
     'rest_framework',
+    'rest_framework.authtoken',
     # debug_toolbar
     "debug_toolbar",
     # my apps
@@ -222,5 +223,8 @@ RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 3
+    'PAGE_SIZE': 3,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }

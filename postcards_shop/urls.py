@@ -21,6 +21,7 @@ from django.conf import settings
 # from products.views import index
 from products.views import IndexView
 from orders.views import stripe_webhook_view
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,6 +35,7 @@ urlpatterns = [
     path('webhook/stripe/', stripe_webhook_view, name='stripe_webhook'),
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('api/v1/', include('api.urls', namespace='api')),
+    path('api-token-auth/', obtain_auth_token)
 
 ]
 
