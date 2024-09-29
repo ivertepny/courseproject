@@ -1,9 +1,11 @@
 import requests
 
 from orders.models import Order
-from .models import TeleSettings
+from telegrambot.models import TeleSettings
+from celery import shared_task
 
 
+@shared_task
 def send_telegram():
     settings = TeleSettings.objects.get(pk=1)
     token = str(settings.tg_token)
@@ -19,6 +21,3 @@ def send_telegram():
         'chat_id': chat_id,
         'text': text
     })
-
-
-

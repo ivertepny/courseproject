@@ -33,6 +33,7 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     path('webhook/stripe/', stripe_webhook_view, name='stripe_webhook'),
     path('social-auth/', include('social_django.urls', namespace='social')),
+    path('api/v1/', include('api.urls', namespace='api')),
 
 ]
 

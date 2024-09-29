@@ -1,4 +1,3 @@
-
 from pathlib import Path
 from dotenv import load_dotenv  # Для файла конфігурації .env
 import os  # Для файла конфігурації .env
@@ -11,7 +10,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -30,6 +30,12 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
+    'social_django',
+    'oauth2_provider',
+    'sslserver',
+    'django_recaptcha',
+    'rest_framework',
     # debug_toolbar
     "debug_toolbar",
     # my apps
@@ -37,6 +43,8 @@ INSTALLED_APPS = [
     #  ??? 'products.apps.ProductsConfig',
     'users',
     'orders',
+    'telegrambot',
+    'api',
 
 ]
 
@@ -144,6 +152,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -157,7 +166,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # робота з e-mail
-DOMAIN_NAME = 'http://127.0.0.1:8000'
+DOMAIN_NAME = 'http://localhost:8000'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 if DEBUG:
@@ -173,6 +182,7 @@ else:
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'social_core.backends.google.GoogleOAuth2',
 ]
 
 SITE_ID = 1  # GitHub
@@ -182,16 +192,35 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': [
             'user',
         ],
-    }
+    },
 }
+
+SOCIALACCOUNT_AUTO_SIGNUP = True
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 # Celery
 
 CELERY_BROKER_URL = f'redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}'
 CELERY_RESULT_BACKEND = f'redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}'
+# CELERY_IMPORTS = ('telegrambot.sendmessage',)
 
 # Stripe
 
 STRIPE_PUBLIC_KEY = os.getenv('MY_STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = os.getenv('MY_STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = os.getenv('MY_STRIPE_WEBHOOK_SECRET')
+
+# ReCAPTCHA
+
+RECAPTCHA_PUBLIC_KEY = os.getenv('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
+# RECAPTCHA_REQUIRED_SCORE = 0.99
+
+# REST Api
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3
+}
