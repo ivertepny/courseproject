@@ -19,7 +19,16 @@
                         <div class="col-lg-4">
                             <input name="basketID" type="number" class="form-control"
                                    value="{{ basket.quantity }}" min="0">
-                                                        
+
+
+{#                            <form method="POST" action="{% url 'products:basket_add' basket.id %}">#}
+{#                                {% csrf_token %}#}
+{#                                <input name="quantity" type="number" class="form-control" value="{{ basket.quantity }}"#}
+{#                                       min="0">#}
+{#                                <button type="submit" class="btn btn-primary">Update</button>#}
+{#                            </form>#}
+
+
                         </div>
                         <div class="col-lg-4">{{ basket.sum }} грн.</div>
                         {#                        {% if basket.id %}#}
