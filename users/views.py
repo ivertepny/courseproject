@@ -26,6 +26,12 @@ class UserRegistrationView(TitleMixin, SuccessMessageMixin, CreateView):
     success_message = 'Вітаємо! Ви успішно зареєеструвались'
     title = 'Store - Реєстрація'
 
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.is_no_social_user = True  # Mark as regular user
+        user.save()
+        return super().form_valid(form)
+
 
 class UserProfileView(TitleMixin, UpdateView):
     model = User

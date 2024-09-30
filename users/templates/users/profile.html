@@ -52,13 +52,15 @@
                             {{ form.email }}
                         </div>
                     </div>
-
-                    <div class="form-row mt-3">
-                        <div class="col-lg-12">
-                            <a href="{% url 'users:password_change' %}" class="btn btn-warning btn-block">Змінити пароль</a>
+                    {% if user.is_no_social_user %}
+                        <div class="form-row mt-3">
+                            <div class="col-lg-12">
+                                <a href="{% url 'users:password_change' %}" class="btn btn-warning btn-block">Змінити
+                                    пароль</a>
+                            </div>
                         </div>
-                    </div>
 
+                    {% endif %}
                     <div class="form-row">
                         <div class="col-lg-12" style="margin-top: 33px;">
                             <input class="btn btn-info btn-block" type="submit" value="Зберегти">

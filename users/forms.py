@@ -29,7 +29,7 @@ class UserLoginForm(AuthenticationForm):
         try:
             user = User.objects.get(username=username)
             if not user.is_verified_email:
-                raise ValidationError("Ваш аккаунт не авторизовано. Будь ласка первірте свою пошту і авторизуйтесь.")
+                raise ValidationError("Ваш аккаунт не авторизовано. Будь ласка перевірте свою пошту і авторизуйтесь.")
         except User.DoesNotExist:
             raise ValidationError("Такого користувача і пароля не існує")
 
