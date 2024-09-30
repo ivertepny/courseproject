@@ -4,6 +4,10 @@ from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.core.cache import cache
 
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 # Create your views here.
 
 from products.models import Product, ProductCategory, Tag, Basket
@@ -15,13 +19,6 @@ from common.views import TitleMixin
 class IndexView(TitleMixin, TemplateView):
     template_name = 'products/index.html'
     title = 'Store'
-
-
-# # перевизначаємо метод для додавання Title
-#     def get_context_data(self, **kwargs):
-#         context = super(IndexView, self).get_context_data()
-#         context['title'] = 'Store'
-#         return context
 
 
 class ProductListView(TitleMixin, ListView):
@@ -46,32 +43,6 @@ class ProductListView(TitleMixin, ListView):
         # context['tags'] = Tag.objects.all()
         return context
 
-# переходимо з FBV на CBV
-
-# def index(request):
-#     context = {
-#         'title': 'Home',
-#         'is_promotion': False,
-#     }
-#     return render(request, 'products/index.html', context)
-
-
-# def products(request, category_id=None, page_number=1):
-#     if category_id:
-#         products = Product.objects.filter(category_id=category_id)
-#     else:
-#         products = Product.objects.all()
-#     paginator = Paginator(products, per_page=3)
-#     products_paginator = paginator.page(page_number)
-#
-#     context = {
-#         'title': 'Shop - Каталог',
-#         'categories': ProductCategory.objects.all(),
-#         'products': products_paginator,
-#         'tags': Tag.objects.all(),
-#     }
-#     return render(request, 'products/products.html', context)
-
 
 @login_required  # декоратор для того, щоб не було корзини у незалогінених користувачів
 def basket_add(request, product_id):
@@ -83,4 +54,14 @@ def basket_add(request, product_id):
 def basket_remove(request, basket_id):
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+# Зміна кільності листівок безпосередьно з кошика
+@login_required
+def basket_update(request, basket_id):
+    basket = get_object_or_404(Basket, id=basket_id, user=request.user)
+    quantity = int(request.POST.get('quantity', 1))
+    basket.quantity = quantity
+    basket.save()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
