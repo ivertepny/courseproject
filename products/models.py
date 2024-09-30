@@ -102,7 +102,7 @@ class Basket(models.Model):
         return basket_item
 
     @classmethod
-    def creaete_or_update(cls, product_id, user):
+    def create_or_update(cls, product_id, user):
         baskets = Basket.objects.filter(user=user, product_id=product_id)
 
         if not baskets.exists():

@@ -75,7 +75,7 @@ class ProductListView(TitleMixin, ListView):
 
 @login_required  # декоратор для того, щоб не було корзини у незалогінених користувачів
 def basket_add(request, product_id):
-    Basket.creaete_or_update(product_id, request.user)
+    Basket.create_or_update(product_id, request.user)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 

@@ -33,7 +33,7 @@ class BasketModelViewSet(ModelViewSet):
             products = Product.objects.filter(id=product_id)
             if not products.exists():
                 return Response({'product_id': 'There is no product with this ID'}, status=status.HTTP_400_BAD_REQUEST)
-            obj, is_created = Basket.creaete_or_update(products.first().id, self.request.user)
+            obj, is_created = Basket.create_or_update(products.first().id, self.request.user)
             status_code = status.HTTP_201_CREATED if is_created else status.HTTP_200_OK
             serializer = self.get_serializer(obj)
             return Response(serializer.data, status=status_code)
