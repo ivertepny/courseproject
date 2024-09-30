@@ -45,6 +45,10 @@ class UserProfileView(TitleMixin, UpdateView):
 #     return context
 
 
+class VerificationFailureView(TemplateView):
+    template_name = 'users/email_verification_expired.html'
+
+
 class EmailVerificationView(TitleMixin, TemplateView):
     title = 'Store - підтвердження електронної пошти'
     template_name = 'users/email_verification.html'
@@ -58,7 +62,8 @@ class EmailVerificationView(TitleMixin, TemplateView):
             user.save()
             return super(EmailVerificationView, self).get(request, *args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('index'))
+            user.delete()
+            return HttpResponseRedirect(reverse_lazy('users:verification_failure'))
 
 
 class UserPasswordChange(PasswordChangeView):
