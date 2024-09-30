@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
 from django import forms
+from django.core.exceptions import ValidationError
 from django_recaptcha.fields import ReCaptchaField
 
 from users.models import User
@@ -20,6 +21,19 @@ class UserLoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+    def clean(self):
+        super().clean()  # Call the parent class's clean method
+        username = self.cleaned_data.get('username')
+
+        try:
+            user = User.objects.get(username=username)
+            if not user.is_verified_email:
+                raise ValidationError("Ваш аккаунт не авторизовано. Будь ласка первірте свою пошту і авторизуйтесь.")
+        except User.DoesNotExist:
+            raise ValidationError("Такого користувача і пароля не існує")
+
+        return self.cleaned_data
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -43,7 +57,8 @@ class UserRegistrationForm(UserCreationForm):
     # додаємо верифікацію пошти
     def save(self, commit=True):
         user = super(UserRegistrationForm, self).save(commit=True)
-        send_email_verification.delay(user.id)
+        # send_email_verification.delay(user.id)
+        send_email_verification(user.id)
         return user
 
 

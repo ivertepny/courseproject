@@ -170,14 +170,22 @@ LOGOUT_REDIRECT_URL = '/'
 DOMAIN_NAME = 'http://localhost:8000'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-else:
-    EMAIL_HOST = os.getenv('MY_EMAIL_HOST')
-    EMAIL_PORT = os.getenv('MY_EMAIL_PORT')
-    EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
-    EMAIL_USE_SSL = os.getenv('MY_EMAIL_USE_SSL')
+# if DEBUG:
+#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# else:
+#     EMAIL_HOST = os.getenv('MY_EMAIL_HOST')
+#     EMAIL_PORT = os.getenv('MY_EMAIL_PORT')
+#     EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
+#     EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
+#     EMAIL_USE_SSL = os.getenv('MY_EMAIL_USE_SSL')
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('MY_EMAIL_HOST')
+EMAIL_PORT = os.getenv('MY_EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
+EMAIL_USE_SSL = os.getenv('MY_EMAIL_USE_SSL')
 
 # робота з OAuth
 AUTHENTICATION_BACKENDS = [
