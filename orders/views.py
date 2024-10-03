@@ -10,7 +10,6 @@ from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-
 from common.views import TitleMixin
 from orders.forms import OrderForm
 from products.models import Basket
@@ -103,10 +102,8 @@ def stripe_webhook_view(request):
 
         # Fulfill the purchase...
         fulfill_order(session)
-        # send_telegram()
+        # надсилає повідомлення в Телеграм через Celery
         send_telegram.delay()
-        # send_telegram.delay_on_commit()
-
 
     # Passed signature verification
     return HttpResponse(status=200)

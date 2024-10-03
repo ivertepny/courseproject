@@ -25,14 +25,14 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'django_extensions',
-    # OAuth
+    # allAuth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
-    'social_django',
-    'oauth2_provider',
+    # 'social_django',
+    # 'oauth2_provider',
     'sslserver',
     'django_recaptcha',
     'rest_framework',
@@ -153,7 +153,6 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -187,14 +186,14 @@ EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
 EMAIL_USE_SSL = os.getenv('MY_EMAIL_USE_SSL')
 
-# робота з OAuth
+# робота з AllAuth
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.google.GoogleOAuth2',
 ]
 
-SITE_ID = 1  # GitHub
+SITE_ID = 1  # GitHub+Google
 
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
@@ -202,12 +201,23 @@ SOCIALACCOUNT_PROVIDERS = {
             'user',
         ],
     },
+    "google": {
+
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "offline",
+        },
+    }
 }
 
-SOCIALACCOUNT_AUTO_SIGNUP = True
+# SOCIALACCOUNT_AUTO_SIGNUP = True
+# SOCIALACCOUNT_LOGIN_ON_GET = False
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 # Celery
 

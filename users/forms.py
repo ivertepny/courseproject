@@ -57,8 +57,8 @@ class UserRegistrationForm(UserCreationForm):
     # додаємо верифікацію пошти
     def save(self, commit=True):
         user = super(UserRegistrationForm, self).save(commit=True)
-        # send_email_verification.delay(user.id)
-        send_email_verification(user.id)
+        send_email_verification.delay(user.id)
+        # send_email_verification(user.id)
         return user
 
 
