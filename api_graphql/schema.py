@@ -23,9 +23,12 @@ class OrderProductObjectType(DjangoObjectType):
 class OrderObjectType(DjangoObjectType):
     order_products = graphene.List(OrderProductObjectType)
 
+    def resolve_order_products(self, info, **kwargs):
+        return self.order_products.all()
+
     class Meta:
         model = Order
-        fields = ('id', 'user', 'total_quantity', 'order_products')
+        fields = ('id', 'order_products')
         interfaces = (graphene.relay.Node,)
 
 
