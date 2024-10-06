@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'django_extensions',
+
     # allAuth
     'allauth',
     'allauth.account',
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django_recaptcha',
     'rest_framework',
     'rest_framework.authtoken',
+    "graphene_django",
     # debug_toolbar
     "debug_toolbar",
     # my apps
@@ -245,4 +247,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
+}
+# GraphQL
+GRAPHENE = {
+    "SCHEMA": "api_graphql.schema.schema"
 }
