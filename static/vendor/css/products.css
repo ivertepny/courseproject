@@ -1,3 +1,11 @@
 body {
     padding-top: 56px;
 }
+
+.carousel-control-prev-icon {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="blue" viewBox="0 0 8 8"%3E%3Cpath d="M4 0L0 4l4 4V0z" /%3E%3C/svg%3E');
+}
+
+.carousel-control-next-icon {
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="blue" viewBox="0 0 8 8"%3E%3Cpath d="M0 0v8l4-4-4-4z" /%3E%3C/svg%3E');
+}

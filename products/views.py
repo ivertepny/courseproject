@@ -4,15 +4,19 @@ from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.core.cache import cache
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+
+from django.utils.html import format_html
+import re
 
 # Create your views here.
 
 from products.models import Product, ProductCategory, Tag, Basket
 from users.models import User
 from common.views import TitleMixin
+from .documents import ProductDocument
 
 
 # використовуємо Mixin
@@ -65,3 +69,32 @@ def basket_update(request, basket_id):
     basket.quantity = quantity
     basket.save()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+# Пошук за допомогою Elasticsearch з виділенням маркером
+def highlight_search_term(text, query):
+    # Екрануємо пошуковий запит для безпечної заміни в HTML
+    highlighted_text = re.sub(f'({re.escape(query)})', r'<mark>\1</mark>', text, flags=re.IGNORECASE)
+    return format_html(highlighted_text)  # повертаємо безпечний HTML
+
+
+def custom_search(request):
+    q = request.GET.get('q')
+    context = {
+        'products': [],  # Порожній список продуктів за замовчуванням
+        'query': q,  # Щоб показати, що шукалося
+    }
+
+    if q:
+        # Використовуємо Elasticsearch для пошуку продуктів
+        s = ProductDocument.search().query("multi_match", query=q, fields=["name", "description"])
+        search_results = s.to_queryset()  # Перетворюємо результати на Django QuerySet
+
+        # Оновлюємо кожен продукт для виділення пошукового терміна
+        for product in search_results:
+            product.name = highlight_search_term(product.name, q)
+            product.description = highlight_search_term(product.description, q)
+
+        context['products'] = search_results
+
+    return render(request, template_name='products/search.html', context=context)

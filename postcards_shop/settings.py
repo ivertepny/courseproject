@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     "graphene_django",
+    "django_elasticsearch_dsl",
+
     # debug_toolbar
     "debug_toolbar",
     # my apps
@@ -112,6 +114,7 @@ DATABASES = {
         "PORT": os.getenv("DB_PORT"),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -251,4 +254,11 @@ REST_FRAMEWORK = {
 # GraphQL
 GRAPHENE = {
     "SCHEMA": "api_graphql.schema.schema"
+}
+
+# Elasticsearch
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'http://localhost:9200'
+    },
 }

@@ -8,22 +8,34 @@
 {% block content %}
     <!-- Page Content -->
 
-    <!-- Зміна кольору і форми стрілок слайдера -->
-    <style>
-        .carousel-control-prev-icon {
-            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="blue" viewBox="0 0 8 8"%3E%3Cpath d="M4 0L0 4l4 4V0z" /%3E%3C/svg%3E');
-        }
-
-        .carousel-control-next-icon {
-            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="blue" viewBox="0 0 8 8"%3E%3Cpath d="M0 0v8l4-4-4-4z" /%3E%3C/svg%3E');
-        }
-    </style>
     <div class="container">
+
         <div class="row">
             <div class="col-lg-3">
                 <h2 class="my-4">
                     <a href="{% url 'products:index' %}">Postcards Shop</a>
                 </h2>
+
+                <!-- Search -->
+
+                <div class="row">
+                    <section class="section mb-4">
+                        <div class="container-fluid">
+                            <form method="GET" action="{% url 'products:custom_search' %}">
+                                <div class="field has-addons d-flex">
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Знайти листівку" name="q">
+                                    </div>
+                                    <div class="control">
+                                        <button class="button-form">Знайти</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+                <!-- Search -->
+
                 <div class="list-group">
                     {% for category in categories %}
                         <a href="{% url 'products:category' category.id %}" class="list-group-item">
@@ -41,8 +53,8 @@
                     {% endfor %}
                 </div>
 
+
             </div>
-            <!-- /.col-lg-3 -->
 
             <div class="col-lg-9">
                 <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
@@ -115,7 +127,7 @@
                             </div>
                         </div>
                     {% endfor %}
-                   
+
 
                 </div>
 
@@ -148,6 +160,9 @@
             </div>
         </div>
     </div>
+
+
+
 {% endblock %}
 {% block footer %}
     <!-- Footer -->
@@ -155,6 +170,5 @@
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; Postcards Shop 2024</p>
         </div>
-        <!-- /.container -->
     </footer>
 {% endblock %}

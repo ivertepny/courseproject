@@ -1,0 +1,50 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'vendor/css/products.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h2 class="my-4">Результати пошуку для "{{ query }}"</h2>
+
+        <div class="row">
+            {% if products %}
+                {% for product in products %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="#"><img class="card-img-top" src="{{ product.image.url }}" alt="Image"></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="#">{{ product.name|safe }}</a>
+                                </h4>
+                                <h5>{{ product.price }} грн.</h5>
+                                <p class="card-text">{{ product.description|safe }}</p>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-outline-success"
+                                   href="{% url 'products:basket_add' product.id %}">
+                                    Додати до кошика
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Нічого не знайдено за запитом "{{ query }}". Спробуйте інші ключові слова.</p>
+            {% endif %}
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block footer %}
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Postcards Shop 2024</p>
+        </div>
+    </footer>
+{% endblock %}
