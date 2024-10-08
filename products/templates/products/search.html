@@ -3,6 +3,7 @@
 
 {% block css %}
     <link href="{% static 'vendor/css/products.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/css/search.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -36,9 +37,39 @@
                 <p>Нічого не знайдено за запитом "{{ query }}". Спробуйте інші ключові слова.</p>
             {% endif %}
         </div>
+
+        {% if is_paginated %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+                        <a class="page-link" href="{% if page_obj.has_previous %}
+                        {% url 'products:custom_search' %}?q={{ query }}&page=
+                            {{ page_obj.previous_page_number }}{% else %} # {% endif %}" tabindex="-1"
+                           aria-disabled="true">
+                            Попередня
+                        </a>
+                    </li>
+                    {% for page in page_obj.paginator.page_range %}
+                        <li class="page-item {% if page == page_obj.number %} active {% endif %}">
+                            <a class="page-link"
+                               href="{% url 'products:custom_search' %}?q={{ query }}&page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
+                        <a class="page-link" href="{% if page_obj.has_next %}
+                        {% url 'products:custom_search' %}?q={{ query }}&page=
+                            {{ page_obj.next_page_number }}{% else %} # {% endif %}">
+                            Наступна
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+
     </div>
-    
+
 {% endblock %}
+
 
 {% block footer %}
     <!-- Footer -->

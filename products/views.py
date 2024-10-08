@@ -74,27 +74,35 @@ def basket_update(request, basket_id):
 # Пошук за допомогою Elasticsearch з виділенням маркером
 def highlight_search_term(text, query):
     # Екрануємо пошуковий запит для безпечної заміни в HTML
-    highlighted_text = re.sub(f'({re.escape(query)})', r'<mark>\1</mark>', text, flags=re.IGNORECASE)
+    highlighted_text = re.sub(
+        f'({re.escape(query)})',
+        r'<span style="background-color: red; color: white;">\1</span>', text, flags=re.IGNORECASE)
     return format_html(highlighted_text)  # повертаємо безпечний HTML
 
+class ProductSearchListView(TitleMixin, ListView):
+    model = Product
+    template_name = 'products/search.html'
+    paginate_by = 3
+    title = 'Store - Пошук'
 
-def custom_search(request):
-    q = request.GET.get('q')
-    context = {
-        'products': [],  # Порожній список продуктів за замовчуванням
-        'query': q,  # Щоб показати, що шукалося
-    }
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            # Використовуємо Elasticsearch для пошуку продуктів
+            s = ProductDocument.search().query("multi_match", query=query, fields=["name", "description"])
+            return s.to_queryset()  # Повертаємо Django QuerySet з результатами
 
-    if q:
-        # Використовуємо Elasticsearch для пошуку продуктів
-        s = ProductDocument.search().query("multi_match", query=q, fields=["name", "description"])
-        search_results = s.to_queryset()  # Перетворюємо результати на Django QuerySet
+        return Product.objects.none()  # Повертаємо порожній QuerySet, якщо запит не було
 
-        # Оновлюємо кожен продукт для виділення пошукового терміна
-        for product in search_results:
-            product.name = highlight_search_term(product.name, q)
-            product.description = highlight_search_term(product.description, q)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')  # Додаємо запит для шаблону
+        context['products'] = self.get_queryset()  # Переконайтеся, що products завжди в контексті
 
-        context['products'] = search_results
+        # Виділення терміна в результатах
+        if context['products']:
+            for product in context['products']:
+                product.name = highlight_search_term(product.name, context['query'])
+                product.description = highlight_search_term(product.description, context['query'])
+        return context
 
-    return render(request, template_name='products/search.html', context=context)
