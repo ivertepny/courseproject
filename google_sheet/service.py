@@ -3,7 +3,7 @@ import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from gspread_formatting import Border, CellFormat, format_cell_range, Borders, Color
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.conf import settings
 
 from orders.models import Order

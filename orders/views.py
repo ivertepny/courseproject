@@ -120,4 +120,5 @@ def fulfill_order(session):
 def send_orders_to_google_sheet(request):
     user = request.user  # Отримати поточного користувача
     write_orders_to_sheet('18wo-GwoHlmPPjTD4M3wVeS28q0qOPRfh57xLCgMkh1E', user, 'A1:E100')
-    return redirect('orders:orders_list')
+    # return redirect('orders:orders_list')
+    return redirect('https://docs.google.com/spreadsheets/d/18wo-GwoHlmPPjTD4M3wVeS28q0qOPRfh57xLCgMkh1E/edit?gid=0#gid=0')
