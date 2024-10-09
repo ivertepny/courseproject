@@ -3,6 +3,8 @@ import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from gspread_formatting import Border, CellFormat, format_cell_range, Borders, Color
+from django.urls import reverse, reverse_lazy
+from django.conf import settings
 
 from orders.models import Order
 
@@ -15,6 +17,8 @@ service_account_file_path = os.path.join(os.path.dirname(__file__), '../google_s
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
     service_account_file_path, scope
 )
+
+host = settings.ALLOWED_HOSTS[0] if settings.ALLOWED_HOSTS else 'localhost:8000'
 
 
 def get_google_sheets_client():
@@ -29,6 +33,7 @@ def get_user_orders(user):
             order.get_status_display(),
             order.created_at.strftime("%Y-%m-%d %H:%M"),
             order.basket_history.get('total_sum', 0),
+            f"http://{host}:8000{reverse('orders:order', args=[order.id])}",
 
         ]
         for order in orders
@@ -46,7 +51,7 @@ def write_orders_to_sheet(sheet_id, user, range):
 
     # Створити заголовки
     header = [f"Всі замовлення користувача: {user_name}"]
-    columns = ["№ Замовлення", "Статус", "Створенний", "ВСЬОГО"]
+    columns = ["№ Замовлення", "Статус", "Створенний", "ВСЬОГО, грн.", 'Деталі замовлення']
 
     # Записати заголовки
     sheet.merge_cells("A1:E1")
@@ -82,10 +87,10 @@ def write_orders_to_sheet(sheet_id, user, range):
     ))
 
     if orders_data:
-        sheet.update(f"A3:D{len(orders_data) + 2}", orders_data)
+        sheet.update(f"A3:E{len(orders_data) + 2}", orders_data)
 
         # Форматування для всіх заповнених клітинок з границями
-        format_cell_range(sheet, f"A3:D{len(orders_data) + 2}", CellFormat(
+        format_cell_range(sheet, f"A3:E{len(orders_data) + 2}", CellFormat(
             borders=Borders(
                 top=Border("SOLID", Color(0, 0, 0)),
                 bottom=Border("SOLID", Color(0, 0, 0)),
@@ -93,5 +98,6 @@ def write_orders_to_sheet(sheet_id, user, range):
                 right=Border("SOLID", Color(0, 0, 0))
             )
         ))
+
     else:
         print("У користувача немає замовлень.")
