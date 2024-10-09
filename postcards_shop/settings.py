@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'orders',
     'telegrambot',
     'api',
+    'google_sheet',
 
 ]
 

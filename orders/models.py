@@ -39,3 +39,7 @@ class Order(models.Model):
         }
         baskets.delete()
         self.save()
+
+    # для отримання текстового статусу в GoogleSheets
+    def get_status_display(self):
+        return dict(self.STATUSES).get(self.status, "Невідомий статус")

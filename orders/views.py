@@ -1,6 +1,6 @@
 import stripe
 from http import HTTPStatus
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
@@ -9,12 +9,13 @@ from django.urls import reverse_lazy, reverse
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.auth.decorators import login_required
 from common.views import TitleMixin
+from google_sheet.service import write_orders_to_sheet
+
 from orders.forms import OrderForm
 from products.models import Basket
 from orders.models import Order
-# from telegrambot.sendmessage import send_telegram
 from telegrambot.tasks import send_telegram
 
 # Stripe
@@ -113,3 +114,10 @@ def fulfill_order(session):
     order_id = int(session.metadata.order_id)
     order = Order.objects.get(id=order_id)
     order.update_after_payment()
+
+
+@login_required
+def send_orders_to_google_sheet(request):
+    user = request.user  # Отримати поточного користувача
+    write_orders_to_sheet('18wo-GwoHlmPPjTD4M3wVeS28q0qOPRfh57xLCgMkh1E', user, 'A1:E100')
+    return redirect('orders:orders_list')

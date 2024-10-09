@@ -4,6 +4,7 @@ from django.urls import path
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordChangeDoneView
 
+from orders.views import send_orders_to_google_sheet
 from users.views import UserLoginView, UserRegistrationView, UserProfileView, EmailVerificationView, UserPasswordChange, \
     VerificationFailureView
 
@@ -19,4 +20,5 @@ urlpatterns = [
     path('password-change/done/', PasswordChangeDoneView.as_view(template_name="users/password_change_done.html"),
          name="password_change_done"),
     path('verification-failure/', VerificationFailureView.as_view(), name='verification_failure'),
+
 ]

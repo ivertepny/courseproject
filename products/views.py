@@ -79,6 +79,7 @@ def highlight_search_term(text, query):
         r'<span style="background-color: red; color: white;">\1</span>', text, flags=re.IGNORECASE)
     return format_html(highlighted_text)  # повертаємо безпечний HTML
 
+
 class ProductSearchListView(TitleMixin, ListView):
     model = Product
     template_name = 'products/search.html'
@@ -105,4 +106,3 @@ class ProductSearchListView(TitleMixin, ListView):
                 product.name = highlight_search_term(product.name, context['query'])
                 product.description = highlight_search_term(product.description, context['query'])
         return context
-
