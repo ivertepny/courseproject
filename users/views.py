@@ -76,3 +76,10 @@ class UserPasswordChange(PasswordChangeView):
     form_class = UserPasswordChangeForm
     success_url = reverse_lazy("users:password_change_done")
     template_name = "users/password_change_form.html"
+
+    # заборона зміни пароля якщо користувач авторизований через соціальну мережу
+    def get(self, request, *args, **kwargs):
+        if request.user.is_no_social_user:
+            return super(UserPasswordChange, self).get(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse_lazy('users:profile'))
