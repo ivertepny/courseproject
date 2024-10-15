@@ -1,0 +1,42 @@
+[
+{
+    "model": "products.productcategory",
+    "pk": 1,
+    "fields": {
+        "name": "Пінап",
+        "description": ""
+    }
+},
+{
+    "model": "products.productcategory",
+    "pk": 2,
+    "fields": {
+        "name": "Казки",
+        "description": null
+    }
+},
+{
+    "model": "products.productcategory",
+    "pk": 3,
+    "fields": {
+        "name": "Знаменитості",
+        "description": ""
+    }
+},
+{
+    "model": "products.productcategory",
+    "pk": 4,
+    "fields": {
+        "name": "Halloween",
+        "description": ""
+    }
+},
+{
+    "model": "products.productcategory",
+    "pk": 5,
+    "fields": {
+        "name": "Люди",
+        "description": ""
+    }
+}
+]

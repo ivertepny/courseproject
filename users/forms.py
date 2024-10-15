@@ -1,4 +1,5 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm, \
+    PasswordResetForm
 from django import forms
 from django.core.exceptions import ValidationError
 from django_recaptcha.fields import ReCaptchaField
@@ -84,3 +85,26 @@ class UserPasswordChangeForm(PasswordChangeForm):
     new_password1 = forms.CharField(label="Новий пароль", widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     new_password2 = forms.CharField(label="Підтвердження пароля",
                                     widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+
+
+class UserPasswordResetForm(PasswordResetForm):
+
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+        'class': 'form-control py-4', 'placeholder': "Введіть адресу електронної пошти"}))
+
+    class Meta:
+        model = User
+        fields = ('email',)
+
+    def clean(self):
+        super().clean()  # Call the parent class's clean method
+        email = self.cleaned_data.get('email')
+
+        try:
+            user = User.objects.get(email=email)
+            if not user.is_verified_email:
+                raise ValidationError("Ваш аккаунт не авторизовано. Будь ласка перевірте свою пошту і авторизуйтесь.")
+        except User.DoesNotExist:
+            raise ValidationError("Такого користувача і пароля не існує")
+
+        return self.cleaned_data

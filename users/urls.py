@@ -6,7 +6,7 @@ from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordCh
 
 from orders.views import send_orders_to_google_sheet
 from users.views import UserLoginView, UserRegistrationView, UserProfileView, EmailVerificationView, UserPasswordChange, \
-    VerificationFailureView
+    VerificationFailureView # UserPasswordReset
 
 app_name = 'users'  # Не зрозумів для чого
 
@@ -21,4 +21,5 @@ urlpatterns = [
          name="password_change_done"),
     path('verification-failure/', VerificationFailureView.as_view(), name='verification_failure'),
 
+    # path('password-reset/', UserPasswordReset.as_view(), name="password_reset"),
 ]

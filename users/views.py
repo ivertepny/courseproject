@@ -1,4 +1,5 @@
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
@@ -6,7 +7,8 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 
 from products.models import Basket
-from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, UserPasswordChangeForm
+from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, UserPasswordChangeForm, \
+    UserPasswordResetForm
 from users.models import User, EmailVerification
 from common.views import TitleMixin
 
@@ -72,7 +74,8 @@ class EmailVerificationView(TitleMixin, TemplateView):
             return HttpResponseRedirect(reverse_lazy('users:verification_failure'))
 
 
-class UserPasswordChange(PasswordChangeView):
+class UserPasswordChange(TitleMixin, PasswordChangeView):
+    title = 'Store - Зміна пароля'
     form_class = UserPasswordChangeForm
     success_url = reverse_lazy("users:password_change_done")
     template_name = "users/password_change_form.html"
@@ -83,3 +86,30 @@ class UserPasswordChange(PasswordChangeView):
             return super(UserPasswordChange, self).get(request, *args, **kwargs)
         else:
             return HttpResponseRedirect(reverse_lazy('users:profile'))
+
+
+# class UserPasswordReset(TitleMixin, PasswordResetView):
+#     title = 'Store - Скидання пароля'
+#     model = User
+#     form_class = UserPasswordResetForm
+#     success_url = reverse_lazy("users:login")
+#     template_name = "users/password_reset_form.html"
+#
+#     def get(self, request, *args, **kwargs):
+#         return super(UserPasswordReset, self).get(request, *args, **kwargs)
+#
+#
+# class CustomPasswordResetConfirmView(TitleMixin, PasswordResetConfirmView):
+#     title = 'Store - Підтвердження скидання пароля'
+#     template_name = 'users/password_reset_confirm.html'
+#     success_url = reverse_lazy('users:password_reset_complete')
+#
+#     def form_valid(self, form):
+#         # Видаляємо старий пароль, встановлюючи недійсний
+#         user = form.save()
+#         user.set_unusable_password()  # Робимо старий пароль недійсним
+#         user.save()
+#
+#         # Оновлюємо сесію, щоб залишити користувача авторизованим
+#         update_session_auth_hash(self.request, user)
+#         return super().form_valid(form)
