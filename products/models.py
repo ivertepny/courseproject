@@ -2,8 +2,8 @@ import stripe
 from django.db import models
 
 from users.models import User
+from orders.models import Order
 from django.conf import settings
-
 
 # Create your models here.
 
@@ -25,6 +25,31 @@ class ProductCategory(models.Model):
         return self.name
 
 
+# Менеджер для популярних продуктів
+
+class ProductManager(models.Manager):
+    def get_popular_products(self, limit=10):
+        product_order_count = {}
+
+        # Отримуємо всі замовлення зі статусом "Сплачено"
+        orders = Order.objects.filter(status__gte=Order.PAID)
+        for order in orders:
+            for item in order.basket_history.get('purchased_items', []):
+                # Перевіряємо, чи існує ключ 'product_id'
+                product_id = item.get('product_id')
+
+                if product_id:
+                    if product_id in product_order_count:
+                        product_order_count[product_id] += item['quantity']
+                    else:
+                        product_order_count[product_id] = item['quantity']
+
+        # Отримуємо найпопулярніші продукти
+        popular_products_ids = sorted(product_order_count, key=product_order_count.get, reverse=True)[:limit]
+
+        return self.filter(id__in=popular_products_ids)
+
+
 class Product(models.Model):
     name = models.CharField(max_length=250, unique=True)
     description = models.TextField(null=True, blank=True)
@@ -34,6 +59,8 @@ class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     stripe_product_price_id = models.CharField(max_length=100, null=True, blank=True)
+
+    objects = ProductManager()  # Додаємо кастомний менеджер
 
     # змінюємо назву в адмінці
     class Meta:
@@ -94,6 +121,7 @@ class Basket(models.Model):
 
     def de_json(self):
         basket_item = {
+            'product_id': self.product.id,
             'product_name': self.product.name,
             'quantity': self.quantity,
             'price': float(self.product.price),

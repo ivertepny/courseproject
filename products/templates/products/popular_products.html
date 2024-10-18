@@ -1,0 +1,36 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+    <h2>Популярні продукти</h2>
+
+    {% if popular_products %}
+        <ul>
+            {% for product in popular_products %}
+                <li>
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p>Ціна: {{ product.price }} грн</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Немає популярних продуктів.</p>
+    {% endif %}
+
+    <!-- Пагінація -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if popular_products.has_previous %}
+                <a href="?page={{ popular_products.previous_page_number }}">Попередня</a>
+            {% endif %}
+
+            <span class="current">
+                Сторінка {{ popular_products.number }} з {{ popular_products.paginator.num_pages }}
+            </span>
+
+            {% if popular_products.has_next %}
+                <a href="?page={{ popular_products.next_page_number }}">Наступна</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

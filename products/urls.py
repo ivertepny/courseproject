@@ -3,7 +3,8 @@
 from django.urls import path
 from django.views.decorators.cache import cache_page
 
-from products.views import ProductListView, basket_add, basket_remove, basket_update, ProductSearchListView
+from products.views import ProductListView, basket_add, basket_remove, basket_update, ProductSearchListView, \
+    PopularProductsView
 
 app_name = 'products' # Не зрозумів для чого
 
@@ -17,5 +18,6 @@ urlpatterns = [
     path('baskets/remove/<int:basket_id>/', basket_remove, name='basket_remove'),
     path('basket/update/<int:basket_id>/', basket_update, name='basket_update'),
     path('search/', ProductSearchListView.as_view(), name='custom_search'),
+    path('popular/', PopularProductsView.as_view(), name='popular_products'),
 ]
 

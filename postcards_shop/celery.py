@@ -1,6 +1,7 @@
 import os
 
 from celery import Celery
+from celery.schedules import crontab
 
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'postcards_shop.settings')
@@ -19,3 +20,15 @@ broker_connection_retry_on_startup = True
 
 
 # task_acks_late = True
+
+# Налаштовуємо періодичні задачі
+app.conf.beat_schedule = {
+    'update-popular-product-cache-every-day': {
+        'task': 'products.tasks.update_popular_products_cache',
+        'schedule': crontab('*/50'),  # Кожні 5 хвилин
+        # every day at midnight (UTC)
+        #
+
+
+    },
+}

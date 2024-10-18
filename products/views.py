@@ -1,3 +1,6 @@
+import os
+import re
+
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
@@ -9,10 +12,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from django.utils.html import format_html
-import re
+from pymongo import MongoClient
 
-# Create your views here.
-
+from postcards_shop import settings
 from products.models import Product, ProductCategory, Tag, Basket
 from users.models import User
 from common.views import TitleMixin
@@ -105,4 +107,36 @@ class ProductSearchListView(TitleMixin, ListView):
             for product in context['products']:
                 product.name = highlight_search_term(product.name, context['query'])
                 product.description = highlight_search_term(product.description, context['query'])
+        return context
+
+
+class PopularProductsView(TitleMixin, ListView):
+    model = Product
+    template_name = 'products/popular_products.html'
+    paginate_by = 5
+    title = 'Store - Популярні Продукти'
+
+    def get_queryset(self):
+        # Отримуємо популярні продукти з MongoDB (або кешу)
+        popular_products = cache.get('popular_products')
+
+        if not popular_products:
+            # Якщо даних немає в кеші, робимо запит до MongoDB
+
+            uri = settings.MONGO_DB_SETTINGS['URI']
+            client = MongoClient(uri)
+            db = client[settings.MONGO_DB_SETTINGS['DB_NAME']]
+            collection = db[settings.MONGO_DB_SETTINGS['COLLECTION']]
+            popular_products_data = collection.find({}).sort('popularity', -1).limit(10)
+            popular_product_ids = [data['product_id'] for data in popular_products_data]
+            popular_products = Product.objects.filter(id__in=popular_product_ids)
+
+            # Кешуємо на 30 хвилин
+            cache.set('popular_products', popular_products, timeout=1800)
+
+        return popular_products
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['popular_products'] = self.get_queryset()
         return context

@@ -1,6 +1,7 @@
 from django.db import models
+from django.apps import apps
 
-from products.models import Basket
+# from products.models import Basket
 from users.models import User
 
 
@@ -31,6 +32,7 @@ class Order(models.Model):
         return f'Order №{self.id}. {self.first_name} {self.last_name}'
 
     def update_after_payment(self):
+        Basket = apps.get_model('products', 'Basket')
         baskets = Basket.objects.filter(user=self.initiator)
         self.status = self.PAID
         self.basket_history = {

@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'django_extensions',
+    'django_celery_beat',
 
     # allAuth
     'allauth',
@@ -116,6 +117,18 @@ DATABASES = {
     }
 }
 
+# MongoDB
+
+MONGO_DB_SETTINGS = {
+    'HOST': '127.0.0.1',
+    'PORT': '27017',
+    'DB_NAME': os.getenv("MONGO_DB_NAME"),
+    'COLLECTION': os.getenv("MONGO_DB_COLLECTION"),
+    'USERNAME': os.getenv("MONGO_DB_USERNAME"),
+    'PASSWORD': os.getenv("MONGO_DB_PASSWORD"),
+    'URI': os.getenv("MONGO_DB_URI"),
+    # 'URI': f"mongodb+srv://{os.getenv('USERNAME')}:{os.getenv('PASSWORD')}@cluster0.8xgmd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -230,6 +243,8 @@ SOCIALACCOUNT_PROVIDERS = {
 CELERY_BROKER_URL = f'redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}'
 CELERY_RESULT_BACKEND = f'redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}'
 # CELERY_IMPORTS = ('telegrambot.sendmessage',)
+USE_DEPRECATED_PYTZ = True
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 # Stripe
 
