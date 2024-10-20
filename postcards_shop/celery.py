@@ -19,16 +19,10 @@ app.autodiscover_tasks()
 broker_connection_retry_on_startup = True
 
 
-# task_acks_late = True
-
 # Налаштовуємо періодичні задачі
 app.conf.beat_schedule = {
     'update-popular-product-cache-every-day': {
         'task': 'products.tasks.update_popular_products_cache',
-        'schedule': crontab('*/50'),  # Кожні 5 хвилин
-        # every day at midnight (UTC)
-        #
-
-
+        'schedule': crontab('*/5'),  # Кожні 5 хвилин
     },
 }

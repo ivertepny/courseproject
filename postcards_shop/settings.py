@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     # 'social_django',
     # 'oauth2_provider',
-    'sslserver',
+    # 'sslserver',
     'django_recaptcha',
     'rest_framework',
     'rest_framework.authtoken',
@@ -127,7 +127,7 @@ MONGO_DB_SETTINGS = {
     'USERNAME': os.getenv("MONGO_DB_USERNAME"),
     'PASSWORD': os.getenv("MONGO_DB_PASSWORD"),
     'URI': os.getenv("MONGO_DB_URI"),
-    # 'URI': f"mongodb+srv://{os.getenv('USERNAME')}:{os.getenv('PASSWORD')}@cluster0.8xgmd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
 }
 
 # Password validation

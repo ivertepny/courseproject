@@ -113,26 +113,22 @@ class ProductSearchListView(TitleMixin, ListView):
 class PopularProductsView(TitleMixin, ListView):
     model = Product
     template_name = 'products/popular_products.html'
-    paginate_by = 5
+    paginate_by = 3
     title = 'Store - Популярні Продукти'
 
     def get_queryset(self):
-        # Отримуємо популярні продукти з MongoDB (або кешу)
         popular_products = cache.get('popular_products')
+        # Connect to MongoDB
+        uri = settings.MONGO_DB_SETTINGS['URI']
+        client = MongoClient(uri)
+        db = client[settings.MONGO_DB_SETTINGS['DB_NAME']]
+        collection = db[settings.MONGO_DB_SETTINGS['COLLECTION']]
 
-        if not popular_products:
-            # Якщо даних немає в кеші, робимо запит до MongoDB
+        # Get popular products from MongoDB
+        popular_products = list(collection.find({}))
 
-            uri = settings.MONGO_DB_SETTINGS['URI']
-            client = MongoClient(uri)
-            db = client[settings.MONGO_DB_SETTINGS['DB_NAME']]
-            collection = db[settings.MONGO_DB_SETTINGS['COLLECTION']]
-            popular_products_data = collection.find({}).sort('popularity', -1).limit(10)
-            popular_product_ids = [data['product_id'] for data in popular_products_data]
-            popular_products = Product.objects.filter(id__in=popular_product_ids)
-
-            # Кешуємо на 30 хвилин
-            cache.set('popular_products', popular_products, timeout=1800)
+        # Кешуємо на 30 хвилин
+        cache.set('popular_products', popular_products, timeout=1800)
 
         return popular_products
 

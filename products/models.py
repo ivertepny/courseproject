@@ -1,6 +1,7 @@
 import stripe
 from django.db import models
 
+
 from users.models import User
 from orders.models import Order
 from django.conf import settings
@@ -27,8 +28,8 @@ class ProductCategory(models.Model):
 
 # Менеджер для популярних продуктів
 
-class ProductManager(models.Manager):
-    def get_popular_products(self, limit=10):
+class PopularProductManager(models.Manager):
+    def get_popular_products(self, limit=5):
         product_order_count = {}
 
         # Отримуємо всі замовлення зі статусом "Сплачено"
@@ -41,13 +42,21 @@ class ProductManager(models.Manager):
                 if product_id:
                     if product_id in product_order_count:
                         product_order_count[product_id] += item['quantity']
+
                     else:
                         product_order_count[product_id] = item['quantity']
 
-        # Отримуємо найпопулярніші продукти
-        popular_products_ids = sorted(product_order_count, key=product_order_count.get, reverse=True)[:limit]
+        # Сортуємо продукти за кількістю замовлень
+        sorted_product_ids = sorted(product_order_count, key=product_order_count.get, reverse=True)[:limit]
 
-        return self.filter(id__in=popular_products_ids)
+        # Отримуємо продукти за відсортованими id
+        products = list(self.filter(id__in=sorted_product_ids))
+
+        # Сортуємо продукти відповідно до відсортованих id
+        products_sorted = sorted(products, key=lambda product: sorted_product_ids.index(product.id))
+
+        return products_sorted
+
 
 
 class Product(models.Model):
@@ -60,7 +69,8 @@ class Product(models.Model):
     tags = models.ManyToManyField(Tag)
     stripe_product_price_id = models.CharField(max_length=100, null=True, blank=True)
 
-    objects = ProductManager()  # Додаємо кастомний менеджер
+    objects = models.Manager()
+    popular = PopularProductManager()  # Додаємо кастомний менеджер
 
     # змінюємо назву в адмінці
     class Meta:

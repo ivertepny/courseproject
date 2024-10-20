@@ -17,7 +17,7 @@ admin.site.register(Tag)
 # тюнінг адмін-панелі
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'quantity', 'category')
+    list_display = ('id','name', 'price', 'quantity', 'category')
     fields = ('name', 'description', ('price', 'quantity'), 'image', 'stripe_product_price_id', 'category', 'tags')
     search_fields = ('name',)
     ordering = ('name',)
