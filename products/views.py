@@ -6,11 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.core.cache import cache
-
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-
 from django.utils.html import format_html
 from pymongo import MongoClient
 
@@ -18,6 +15,7 @@ from postcards_shop import settings
 from products.models import Product, ProductCategory, Tag, Basket
 from users.models import User
 from common.views import TitleMixin
+from .connect_mongodb import connect_mongo
 from .documents import ProductDocument
 
 
@@ -47,6 +45,9 @@ class ProductListView(TitleMixin, ListView):
         else:
             context['categories'] = categories
         # context['tags'] = Tag.objects.all()
+        popular_product_ids = [str(product['product_id']) for product in connect_mongo().find({})]
+        context['popular_product_ids'] = popular_product_ids
+
         return context
 
 
@@ -102,7 +103,7 @@ class ProductSearchListView(TitleMixin, ListView):
         context['query'] = self.request.GET.get('q', '')  # Додаємо запит для шаблону
         context['products'] = self.get_queryset()  # Переконайтеся, що products завжди в контексті
 
-        # Виділення терміна в результатах
+        # Виділення в результатах
         if context['products']:
             for product in context['products']:
                 product.name = highlight_search_term(product.name, context['query'])
@@ -118,15 +119,7 @@ class PopularProductsView(TitleMixin, ListView):
 
     def get_queryset(self):
         popular_products = cache.get('popular_products')
-        # Connect to MongoDB
-        uri = settings.MONGO_DB_SETTINGS['URI']
-        client = MongoClient(uri)
-        db = client[settings.MONGO_DB_SETTINGS['DB_NAME']]
-        collection = db[settings.MONGO_DB_SETTINGS['COLLECTION']]
-
-        # Get popular products from MongoDB
-        popular_products = list(collection.find({}))
-
+        popular_products = list(connect_mongo().find({}))
         # Кешуємо на 30 хвилин
         cache.set('popular_products', popular_products, timeout=1800)
 

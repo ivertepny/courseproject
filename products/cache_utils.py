@@ -1,13 +1,9 @@
 from celery import shared_task
 from pymongo import MongoClient
 from django.conf import settings
-from products.models import Product
 
-# Підключення до MongoDB
-uri = settings.MONGO_DB_SETTINGS['URI']
-client = MongoClient(uri)
-db = client[settings.MONGO_DB_SETTINGS['DB_NAME']]
-collection = db[settings.MONGO_DB_SETTINGS['COLLECTION']]
+from products.connect_mongodb import connect_mongo
+from products.models import Product
 
 
 # Оновлення кешу найпопулярніших продуктів у MongoDB
@@ -19,7 +15,7 @@ def update_popular_products_cache():
         return
 
     # Видаляємо старі записи
-    result = collection.delete_many({})
+    result = connect_mongo().delete_many({})
 
     # Вставляємо нові продукти в кеш
     product_cache = []
@@ -33,7 +29,7 @@ def update_popular_products_cache():
         })
 
     if product_cache:
-        result = collection.insert_many(product_cache)
+        result = connect_mongo().insert_many(product_cache)
 
     else:
         print("No products to insert.")

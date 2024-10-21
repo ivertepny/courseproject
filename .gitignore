@@ -174,3 +174,11 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
+/products/fixtures/products.json
+/products/fixtures/categories.json
+cert.crt
+cert.key
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir
+start.sh

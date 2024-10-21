@@ -52,10 +52,7 @@
                         <a href="#" class="list-group-item"> {{ tag.name }} </a>
                     {% endfor %}
                 </div>
-
-
             </div>
-
             <div class="col-lg-9">
                 <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -93,7 +90,6 @@
                     </a>
                 </div>
                 <div class="row">
-
                     {% for product in object_list %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
@@ -103,6 +99,9 @@
                                          alt="empty">
                                 </a>
                                 <div class="card-body">
+                                    {% if product.id|stringformat:"s" in popular_product_ids %}
+                                        <span class="badge badge-warning">ТОП продажу</span>
+                                    {% endif %}
                                     <h4 class="card-title">
                                         <a href="#">{{ product.name }}</a>
                                     </h4>
