@@ -34,10 +34,10 @@ class UserRegistrationViewTest(TestCase):
         self.assertFalse(User.objects.filter(username=username).exists())
         response = self.client.post(self.path, self.data)
 
-        # check creating of user
-        self.assertEqual(response.status_code, 200)
-        # self.assertRedirects(response, expected_url=reverse('users:login'))
-        # self.assertTrue(User.objects.filter(username=username).exists())
+        # check creating of user object
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(User.objects.filter(username=username).exists())
+        self.assertEqual(response.url, reverse('users:login'))
 
         # check creating e-mail verification
         email_verification = EmailVerification.objects.filter(user__username=username)

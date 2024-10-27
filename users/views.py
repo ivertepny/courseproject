@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
@@ -86,6 +87,12 @@ class UserPasswordChange(TitleMixin, PasswordChangeView):
             return super(UserPasswordChange, self).get(request, *args, **kwargs)
         else:
             return HttpResponseRedirect(reverse_lazy('users:profile'))
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_no_social_user:
+            messages.error(request, "You are not allowed to change your password from here.")
+            return HttpResponseForbidden("You are not allowed to change your password from here.")
+        return super().dispatch(request, *args, **kwargs)
 
 
 # class UserPasswordReset(TitleMixin, PasswordResetView):

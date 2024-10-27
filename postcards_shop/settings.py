@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     "graphene_django",
     "django_elasticsearch_dsl",
+    'drf_yasg',
 
     # debug_toolbar
     "debug_toolbar",
@@ -278,3 +279,8 @@ ELASTICSEARCH_DSL = {
         'hosts': 'http://localhost:9200'
     },
 }
+
+
+# OpenAI
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')

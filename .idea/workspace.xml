@@ -4,19 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d956807-7e4e-4177-a5a3-3c1a636bf26b" name="Changes" comment="Start with user form">
-      <change afterPath="$PROJECT_DIR$/users/templates/users/profile.html" afterDir="false" />
+    <list default="true" id="4d956807-7e4e-4177-a5a3-3c1a636bf26b" name="Changes" comment="Refactoring cache for popular products with MongoDB finished">
+      <change afterPath="$PROJECT_DIR$/products/templates/products/text_to_image.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cert.crt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cert.key" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/google_sheet/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/orders/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/orders/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/postcards_shop/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/postcards_shop/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/products/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/products/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products/fixtures/categories.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/products/fixtures/products.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/products/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/products/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/products/templates/products/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/products/templates/products/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/products/templates/products/products.html" beforeDir="false" afterPath="$PROJECT_DIR$/products/templates/products/products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/products/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/products/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/products/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/products/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/templates/users/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/users/templates/users/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/templates/users/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/users/templates/users/registration.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/templates/users/password_change_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/users/templates/users/password_change_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,8 +39,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -62,31 +71,62 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Django Server.postcards_shop.executor": "Run",
-    "Python.models.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
-    "django.template.preview.state": "SHOW_EDITOR",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/User/Desktop/Hillel/HW_6",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Python",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.postcards_shop.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: api.tests.BasketModelViewSetTests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: api.tests.ProductModelViewSetTests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderListViewTest.test_order_list_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTest.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTest.test_order_create_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTest.test_order_detail_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTest.test_order_list_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTest.test_stripe_webhook_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTests.test_order_create_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTests.test_order_detail_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTests.test_order_list_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.OrderViewsTests.test_stripe_webhook_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.StripeWebhookViewTests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.StripeWebhookViewTests.test_stripe_webhook_invalid_signature.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.StripeWebhookViewTests.test_stripe_webhook_valid_event.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests.TestOrders.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests_ready.OrderViewsTests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests_ready.OrderViewsTests.test_order_create_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests_ready.OrderViewsTests.test_order_create_view_post_success.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests_ready.OrderViewsTests.test_order_list_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.tests_ready.OrderViewsTests.test_stripe_webhook_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: orders.views.OrderViewsTest.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: products.tests.IndexViewTestCase.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: products.tests.ProductsListViewTestCase.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: products.tests.ProductsListViewTestCase.test_products_list_view.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: products.tests.ProductsListViewTestCase.test_products_list_view_with_category.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: users.tests.UserRegistrationViewTest.test_user_registration_get.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: users.tests.UserRegistrationViewTest.test_user_registration_post_failure.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: users.tests.UserRegistrationViewTest.test_user_registration_post_success.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.elasticsearch: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Python.models.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/User/Desktop/Hillel/HW_6&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Python&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\User\Desktop\Hillel\Course_project\postcards_shop\static\vendor\img\users" />
@@ -95,7 +135,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Django Server.postcards_shop">
-    <configuration name="models" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Test: orders.tests.StripeWebhookViewTests" type="DjangoTestsConfigurationType" temporary="true">
       <module name="postcards_shop" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -104,18 +144,79 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/products" />
+      <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/products/models.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="TARGET" value="orders.tests.StripeWebhookViewTests" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: products.tests.IndexViewTestCase" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="postcards_shop" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="products.tests.IndexViewTestCase" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: products.tests.ProductsListViewTestCase" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="postcards_shop" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="products.tests.ProductsListViewTestCase" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test: products.tests.ProductsListViewTestCase.test_products_list_view_with_category" type="DjangoTestsConfigurationType" temporary="true">
+      <module name="postcards_shop" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="products.tests.ProductsListViewTestCase.test_products_list_view_with_category" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
       <method v="2" />
     </configuration>
     <configuration name="postcards_shop" type="Python.DjangoServer" factoryName="Django server">
@@ -143,17 +244,48 @@
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.elasticsearch: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="elasticsearch" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Django Server.postcards_shop" />
+      <item itemvalue="Django tests.Test: products.tests.ProductsListViewTestCase.test_products_list_view_with_category" />
+      <item itemvalue="Django tests.Test: products.tests.IndexViewTestCase" />
+      <item itemvalue="Django tests.Test: products.tests.ProductsListViewTestCase" />
+      <item itemvalue="Django tests.Test: orders.tests.StripeWebhookViewTests" />
+      <item itemvalue="Docker.docker-compose.yml.elasticsearch: Compose Deployment" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.models" />
+        <item itemvalue="Django tests.Test: products.tests.ProductsListViewTestCase" />
+        <item itemvalue="Docker.docker-compose.yml.elasticsearch: Compose Deployment" />
+        <item itemvalue="Django tests.Test: products.tests.ProductsListViewTestCase.test_products_list_view_with_category" />
+        <item itemvalue="Django tests.Test: products.tests.IndexViewTestCase" />
+        <item itemvalue="Django tests.Test: orders.tests.StripeWebhookViewTests" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.18034.82" />
-        <option value="bundled-python-sdk-975db3bf15a3-2767605e8bc2-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.18034.82" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.19416.19" />
+        <option value="bundled-python-sdk-337b0a7a993a-2767605e8bc2-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.19416.19" />
       </set>
     </attachedChunks>
   </component>
@@ -189,6 +321,20 @@
       <workItem from="1722972132824" duration="300000" />
       <workItem from="1723012241962" duration="622000" />
       <workItem from="1723016550267" duration="710000" />
+      <workItem from="1729524966825" duration="88000" />
+      <workItem from="1729526513074" duration="4445000" />
+      <workItem from="1729533836124" duration="26000" />
+      <workItem from="1729606110051" duration="15655000" />
+      <workItem from="1729687969995" duration="3002000" />
+      <workItem from="1729757995015" duration="87000" />
+      <workItem from="1729758191038" duration="241000" />
+      <workItem from="1729761699582" duration="3259000" />
+      <workItem from="1729767386915" duration="5800000" />
+      <workItem from="1729854135381" duration="885000" />
+      <workItem from="1729867165647" duration="144000" />
+      <workItem from="1729929394508" duration="340000" />
+      <workItem from="1729946588730" duration="6076000" />
+      <workItem from="1729954989499" duration="25000" />
     </task>
     <task id="LOCAL-00001" summary="First step">
       <option name="closed" value="true" />
@@ -230,6 +376,36 @@
     <option name="LAST_COMMIT_MESSAGE" value="Start with user form" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTest_test_order_create_view.coverage" NAME="Test: orders.tests.OrderViewsTest.test_order_create_view Coverage Results" MODIFIED="1729608162731" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__users_tests_UserRegistrationViewTest_test_user_registration_post_success.coverage" NAME="Test: users.tests.UserRegistrationViewTest.test_user_registration_post_success Coverage Results" MODIFIED="1729607131802" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_StripeWebhookViewTests.coverage" NAME="Test: orders.tests.StripeWebhookViewTests Coverage Results" MODIFIED="1729690159610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_StripeWebhookViewTests_test_stripe_webhook_invalid_signature.coverage" NAME="Test: orders.tests.StripeWebhookViewTests.test_stripe_webhook_invalid_signature Coverage Results" MODIFIED="1729623451200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTests_test_order_detail_view.coverage" NAME="Test: orders.tests.OrderViewsTests.test_order_detail_view Coverage Results" MODIFIED="1729621101600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTest_test_order_detail_view.coverage" NAME="Test: orders.tests.OrderViewsTest.test_order_detail_view Coverage Results" MODIFIED="1729609096408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_TestOrders.coverage" NAME="Test: orders.tests.TestOrders Coverage Results" MODIFIED="1729607332628" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__api_tests_ProductModelViewSetTests.coverage" NAME="Test: api.tests.ProductModelViewSetTests Coverage Results" MODIFIED="1729688404433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__users_tests_UserRegistrationViewTest_test_user_registration_post_failure.coverage" NAME="Test: users.tests.UserRegistrationViewTest.test_user_registration_post_failure Coverage Results" MODIFIED="1729607233551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__products_tests_ProductsListViewTestCase_test_products_list_view.coverage" NAME="Test: products.tests.ProductsListViewTestCase.test_products_list_view Coverage Results" MODIFIED="1729606728737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_ready_OrderViewsTests_test_order_list_view.coverage" NAME="Test: orders.tests_ready.OrderViewsTests.test_order_list_view Coverage Results" MODIFIED="1729620230764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__products_tests_IndexViewTestCase.coverage" NAME="Test: products.tests.IndexViewTestCase Coverage Results" MODIFIED="1729765240662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_StripeWebhookViewTests_test_stripe_webhook_valid_event.coverage" NAME="Test: orders.tests.StripeWebhookViewTests.test_stripe_webhook_valid_event Coverage Results" MODIFIED="1729624373267" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__products_tests_ProductsListViewTestCase_test_products_list_view_with_category.coverage" NAME="Test: products.tests.ProductsListViewTestCase.test_products_list_view_with_category Coverage Results" MODIFIED="1729766216213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTests_test_order_list_view.coverage" NAME="Test: orders.tests.OrderViewsTests.test_order_list_view Coverage Results" MODIFIED="1729621020481" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTests.coverage" NAME="Test: orders.tests.OrderViewsTests Coverage Results" MODIFIED="1729624444086" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_ready_OrderViewsTests.coverage" NAME="Test: orders.tests_ready.OrderViewsTests Coverage Results" MODIFIED="1729622233700" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderListViewTest_test_order_list_view.coverage" NAME="Test: orders.tests.OrderListViewTest.test_order_list_view Coverage Results" MODIFIED="1729607595296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__api_tests_BasketModelViewSetTests.coverage" NAME="Test: api.tests.BasketModelViewSetTests Coverage Results" MODIFIED="1729688437805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/postcards_shop$models.coverage" NAME="models Coverage Results" MODIFIED="1722760877421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/products" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTests_test_stripe_webhook_view.coverage" NAME="Test: orders.tests.OrderViewsTests.test_stripe_webhook_view Coverage Results" MODIFIED="1729622608099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_ready_OrderViewsTests_test_order_create_view_post_success.coverage" NAME="Test: orders.tests_ready.OrderViewsTests.test_order_create_view_post_success Coverage Results" MODIFIED="1729616881386" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_ready_OrderViewsTests_test_stripe_webhook_view.coverage" NAME="Test: orders.tests_ready.OrderViewsTests.test_stripe_webhook_view Coverage Results" MODIFIED="1729617252724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__users_tests_UserRegistrationViewTest_test_user_registration_get.coverage" NAME="Test: users.tests.UserRegistrationViewTest.test_user_registration_get Coverage Results" MODIFIED="1729606879466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_views_OrderViewsTest.coverage" NAME="Test: orders.views.OrderViewsTest Coverage Results" MODIFIED="1729609241504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTest_test_order_list_view.coverage" NAME="Test: orders.tests.OrderViewsTest.test_order_list_view Coverage Results" MODIFIED="1729607885102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTest_test_stripe_webhook_view.coverage" NAME="Test: orders.tests.OrderViewsTest.test_stripe_webhook_view Coverage Results" MODIFIED="1729608487296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_ready_OrderViewsTests_test_order_create_view.coverage" NAME="Test: orders.tests_ready.OrderViewsTests.test_order_create_view Coverage Results" MODIFIED="1729621455953" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTests_test_order_create_view.coverage" NAME="Test: orders.tests.OrderViewsTests.test_order_create_view Coverage Results" MODIFIED="1729621205622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__products_tests_ProductsListViewTestCase.coverage" NAME="Test: products.tests.ProductsListViewTestCase Coverage Results" MODIFIED="1729769780268" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/postcards_shop$Test__orders_tests_OrderViewsTest.coverage" NAME="Test: orders.tests.OrderViewsTest Coverage Results" MODIFIED="1729609880484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

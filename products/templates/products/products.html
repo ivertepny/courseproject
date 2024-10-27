@@ -35,6 +35,35 @@
                     </section>
                 </div>
                 <!-- Search -->
+            
+
+                <div class="list-group">
+                    <h6>
+                        або згенеруй свою листівку
+                    </h6>
+                </div>
+
+                <!-- Generate AI -->
+
+                <div class="row">
+                    <section class="section mb-4">
+                        <div class="container-fluid">
+                            <form method="POST" action="{% url 'products:generate_ai' %}">
+                                {% csrf_token %}
+                                <div class="field has-addons d-flex">
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Згенерувати листівку"
+                                               name="prompt">
+                                    </div>
+                                    <div class="control">
+                                        <button class="button-form">Пуск</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+                <!-- Generate AI -->
 
                 <div class="list-group">
                     {% for category in categories %}
@@ -99,9 +128,11 @@
                                          alt="empty">
                                 </a>
                                 <div class="card-body">
-                                    {% if product.id|stringformat:"s" in popular_product_ids %}
-                                        <span class="badge badge-warning">ТОП продажу</span>
-                                    {% endif %}
+                                    <div style="min-height: 40px;" class="d-flex flex-wrap gap-3 align-items-start">
+                                        {% if product.id|stringformat:"s" in popular_product_ids %}
+                                            <span class="badge badge-warning">ТОП продажу</span>
+                                        {% endif %}
+                                    </div>
                                     <h4 class="card-title">
                                         <a href="#">{{ product.name }}</a>
                                     </h4>

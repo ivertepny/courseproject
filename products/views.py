@@ -1,5 +1,10 @@
 import os
 import re
+import base64
+from io import BytesIO
+
+import openai
+from openai import OpenAI, OpenAIError
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -10,7 +15,9 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.utils.html import format_html
 from pymongo import MongoClient
+from django.http import JsonResponse
 
+from PIL import Image
 from postcards_shop import settings
 from products.models import Product, ProductCategory, Tag, Basket
 from users.models import User
@@ -129,3 +136,57 @@ class PopularProductsView(TitleMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['popular_products'] = self.get_queryset()
         return context
+
+
+# OpenAI
+
+
+
+
+class TextToImageView(ListView):
+    template_name = 'products/text_to_image.html'
+    title = 'Store - AI'
+
+    def get(self, request, *args, **kwargs):
+        return self.render_to_response({})
+
+    def post(self, request):
+        text_prompt = request.POST.get("prompt")
+        if not text_prompt:
+            return JsonResponse({"error": "No text prompt provided."}, status=400)
+
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            return JsonResponse({"error": "API key not configured."}, status=500)
+
+        openai_client = OpenAI(api_key=api_key)
+
+        try:
+            response = openai_client.images.generate(
+                model="dall-e-3",
+                prompt=text_prompt,
+                n=1,
+                size="1024x1024",
+                response_format="b64_json",
+            )
+
+            # Decode the base64 image data
+            image_data = response.data[0].b64_json
+            decoded_image_data = base64.b64decode(image_data)
+
+            # Open the image using PIL
+            image = Image.open(BytesIO(decoded_image_data))
+            # Resize the image to 458x458
+            image = image.resize((458, 458))
+            # Save the cropped image to a file
+            file_path = os.path.join(settings.MEDIA_ROOT, "generated_image")
+            image.save(file_path, "JPEG")
+
+            return JsonResponse({"message": "Image generated, cropped, and saved successfully."}, status=200)
+
+        except OpenAIError as e:
+            if 'billing_hard_limit_reached' in str(e):
+                return JsonResponse({"error": "Billing limit reached. Please check your OpenAI billing settings."}, status=402)
+            return JsonResponse({"error": str(e)}, status=500)
+        except Exception as e:
+            return JsonResponse({"error": "An unexpected error occurred."}, status=500)

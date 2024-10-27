@@ -176,9 +176,10 @@ cython_debug/
 
 /products/fixtures/products.json
 /products/fixtures/categories.json
-cert.crt
-cert.key
+*/cert.crt
+*/cert.key
 celerybeat-schedule.bak
 celerybeat-schedule.dat
 celerybeat-schedule.dir
 start.sh
+*/workspace.xml

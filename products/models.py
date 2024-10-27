@@ -1,7 +1,6 @@
 import stripe
 from django.db import models
 
-
 from users.models import User
 from orders.models import Order
 from django.conf import settings
@@ -56,7 +55,6 @@ class PopularProductManager(models.Manager):
         products_sorted = sorted(products, key=lambda product: sorted_product_ids.index(product.id))
 
         return products_sorted
-
 
 
 class Product(models.Model):
