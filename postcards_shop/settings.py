@@ -16,6 +16,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -73,8 +74,7 @@ ROOT_URLCONF = 'postcards_shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': []
-        ,
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -279,7 +279,6 @@ ELASTICSEARCH_DSL = {
         'hosts': 'http://localhost:9200'
     },
 }
-
 
 # OpenAI
 

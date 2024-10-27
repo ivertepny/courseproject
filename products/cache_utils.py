@@ -1,7 +1,3 @@
-from celery import shared_task
-from pymongo import MongoClient
-from django.conf import settings
-
 from products.connect_mongodb import connect_mongo
 from products.models import Product
 

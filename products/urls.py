@@ -1,12 +1,11 @@
 # Мій файл urls
 
 from django.urls import path
-from django.views.decorators.cache import cache_page
 
 from products.views import ProductListView, basket_add, basket_remove, basket_update, ProductSearchListView, \
     PopularProductsView, TextToImageView
 
-app_name = 'products' # Не зрозумів для чого
+app_name = 'products'  # Не зрозумів для чого
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='index'),
@@ -22,4 +21,3 @@ urlpatterns = [
 
     path('generateai/', TextToImageView.as_view(), name='generate_ai'),
 ]
-

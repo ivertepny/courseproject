@@ -21,7 +21,7 @@ class IndexViewTestCase(TestCase):
 class ProductsListViewTestCase(TestCase):
     # fixtures = ['categories_utf8.json', 'products_utf8.json']
 
-    def setUp(self): # щоб не писати products = Product.objects.all() в кожному тесті
+    def setUp(self):  # щоб не писати products = Product.objects.all() в кожному тесті
         self.products = Product.objects.all()
         # Create a category
         self.category = ProductCategory.objects.create(name="Category 1")
@@ -42,7 +42,6 @@ class ProductsListViewTestCase(TestCase):
 
     def test_products_list_view(self):
         path = reverse('products:index')
-        template_name = 'products/products.html'
         response = self.client.get(path)
 
         self._common_tests(response)
@@ -62,8 +61,7 @@ class ProductsListViewTestCase(TestCase):
             list(products_in_category[0:pag_number])  # Use the dynamic QuerySet here
         )
 
-    def _common_tests(self, response): # щоб не повторювати код
+    def _common_tests(self, response):  # щоб не повторювати код
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['title'], 'Store - Каталог')
         self.assertTemplateUsed(response, 'products/products.html')
-

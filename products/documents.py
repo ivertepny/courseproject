@@ -13,4 +13,3 @@ class ProductDocument(Document):
     class Django:
         model = Product
         fields = ["name", "description"]
-

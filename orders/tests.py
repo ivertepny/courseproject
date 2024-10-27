@@ -1,20 +1,16 @@
 import hashlib
 import hmac
 import time
+import json
 
 from django.test import TestCase
 from django.urls import reverse
 from django.conf import settings
-from django.urls import reverse
-from django.test import TestCase
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from orders.models import Order
 from products.models import Basket, Product, ProductCategory
-from orders.forms import OrderForm
-import stripe
-import json
 
 User = get_user_model()
 
@@ -43,7 +39,7 @@ class OrderViewsTests(TestCase):
     def test_order_create_view_post_success(self):  # OK
 
         # Create a test basket for the user
-        basket = Basket.objects.create(user=self.user, product=self.product, quantity=2)
+        Basket.objects.create(user=self.user, product=self.product, quantity=2)
 
         response = self.client.post(reverse('orders:order_create'), data={
             'first_name': 'John',

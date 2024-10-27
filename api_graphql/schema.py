@@ -1,5 +1,4 @@
 import graphene
-from graphene_django.fields import DjangoConnectionField
 from graphene_django.types import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 

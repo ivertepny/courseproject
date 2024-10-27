@@ -1,6 +1,6 @@
 import stripe
 from http import HTTPStatus
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView

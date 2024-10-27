@@ -49,7 +49,7 @@ class UserRegistrationViewTest(TestCase):
 
     def test_user_registration_post_failure(self):  # OK
         username = self.data['username']
-        user = User.objects.create_user(username=username)
+        User.objects.create_user(username=username)
         response = self.client.post(self.path, self.data)
 
         self.assertEqual(response.status_code, 200)

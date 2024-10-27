@@ -1,15 +1,13 @@
 from django.contrib import messages
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
+from django.contrib.auth.views import LoginView, PasswordChangeView  # , PasswordResetView, PasswordResetConfirmView
 from django.http import HttpResponseRedirect, HttpResponseForbidden
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 
-from products.models import Basket
-from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, UserPasswordChangeForm, \
-    UserPasswordResetForm
+from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, \
+    UserPasswordChangeForm  # , UserPasswordResetForm
 from users.models import User, EmailVerification
 from common.views import TitleMixin
 
@@ -93,7 +91,6 @@ class UserPasswordChange(TitleMixin, PasswordChangeView):
             messages.error(request, "You are not allowed to change your password from here.")
             return HttpResponseForbidden("You are not allowed to change your password from here.")
         return super().dispatch(request, *args, **kwargs)
-
 
 # class UserPasswordReset(TitleMixin, PasswordResetView):
 #     title = 'Store - Скидання пароля'

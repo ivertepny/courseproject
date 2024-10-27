@@ -2,11 +2,10 @@
 
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import LogoutView, PasswordChangeDoneView  # , PasswordChangeView
 
-from orders.views import send_orders_to_google_sheet
 from users.views import UserLoginView, UserRegistrationView, UserProfileView, EmailVerificationView, UserPasswordChange, \
-    VerificationFailureView # UserPasswordReset
+    VerificationFailureView  # UserPasswordReset
 
 app_name = 'users'  # Не зрозумів для чого
 

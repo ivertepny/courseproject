@@ -3,10 +3,8 @@ import re
 import base64
 from io import BytesIO
 
-import openai
 from openai import OpenAI, OpenAIError
 
-from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
@@ -14,13 +12,11 @@ from django.core.cache import cache
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.utils.html import format_html
-from pymongo import MongoClient
 from django.http import JsonResponse
 
 from PIL import Image
 from postcards_shop import settings
-from products.models import Product, ProductCategory, Tag, Basket
-from users.models import User
+from products.models import Product, ProductCategory, Basket  # , Tag
 from common.views import TitleMixin
 from .connect_mongodb import connect_mongo
 from .documents import ProductDocument
@@ -141,8 +137,6 @@ class PopularProductsView(TitleMixin, ListView):
 # OpenAI
 
 
-
-
 class TextToImageView(ListView):
     template_name = 'products/text_to_image.html'
     title = 'Store - AI'
@@ -186,7 +180,8 @@ class TextToImageView(ListView):
 
         except OpenAIError as e:
             if 'billing_hard_limit_reached' in str(e):
-                return JsonResponse({"error": "Billing limit reached. Please check your OpenAI billing settings."}, status=402)
+                return JsonResponse({"error": "Billing limit reached. Please check your OpenAI billing settings."},
+                                    status=402)
             return JsonResponse({"error": str(e)}, status=500)
         except Exception as e:
-            return JsonResponse({"error": "An unexpected error occurred."}, status=500)
+            return JsonResponse({"error": str(e)}, status=500)

@@ -1,5 +1,4 @@
 from django.db import models
-# from orders import models
 
 
 class TeleSettings(models.Model):
@@ -9,5 +8,3 @@ class TeleSettings(models.Model):
 
     def __str__(self):
         return self.tg_chat_id
-
-

@@ -39,4 +39,3 @@ class BasketModelViewSet(ModelViewSet):
             return Response(serializer.data, status=status_code)
         except KeyError:
             return Response({'product_id': 'This field is required'}, status=status.HTTP_400_BAD_REQUEST)
-
