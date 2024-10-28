@@ -241,8 +241,8 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Celery + Redis
 
-CELERY_BROKER_URL = f'redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}'
-CELERY_RESULT_BACKEND = f'redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}'
+CELERY_BROKER_URL = f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}"
+CELERY_RESULT_BACKEND = f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}"
 # CELERY_IMPORTS = ('telegrambot.sendmessage',)
 USE_DEPRECATED_PYTZ = True
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
