@@ -25,7 +25,7 @@ def update_popular_products_cache():
         })
 
     if product_cache:
-        result = connect_mongo().insert_many(product_cache)
-
+        connect_mongo().insert_many(product_cache)
+    # result = connect_mongo().insert_many(product_cache)
     else:
         print("No products to insert.")
