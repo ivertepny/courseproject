@@ -11,8 +11,8 @@ def update_popular_products_cache():
         return
 
     # Видаляємо старі записи з кешу
-    result = connect_mongo().delete_many({})
-
+    connect_mongo().delete_many({})
+    # result = connect_mongo().delete_many({})
     # Вставляємо нові продукти в кеш
     product_cache = []
     for product in popular_products:
