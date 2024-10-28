@@ -10,7 +10,7 @@ def update_popular_products_cache():
         print("No popular products found.")
         return
 
-    # Видаляємо старі записи
+    # Видаляємо старі записи з кешу
     result = connect_mongo().delete_many({})
 
     # Вставляємо нові продукти в кеш
