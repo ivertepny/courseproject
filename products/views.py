@@ -1,6 +1,8 @@
 import os
 import re
 import base64
+import time
+
 from io import BytesIO
 
 from openai import OpenAI, OpenAIError
@@ -136,20 +138,16 @@ class PopularProductsView(TitleMixin, ListView):
 
 # OpenAI
 
-
-class TextToImageView(ListView):
+class TextToImageView(TemplateView):
     template_name = 'products/text_to_image.html'
     title = 'Store - AI'
 
-    def get(self, request, *args, **kwargs):
-        return self.render_to_response({})
-
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         text_prompt = request.POST.get("prompt")
         if not text_prompt:
             return JsonResponse({"error": "No text prompt provided."}, status=400)
 
-        api_key = os.environ.get("OPENAI_API_KEY")
+        api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
             return JsonResponse({"error": "API key not configured."}, status=500)
 
@@ -164,24 +162,28 @@ class TextToImageView(ListView):
                 response_format="b64_json",
             )
 
-            # Decode the base64 image data
+            # Декодуємо image і підганяємо під розмір листівки
             image_data = response.data[0].b64_json
             decoded_image_data = base64.b64decode(image_data)
-
-            # Open the image using PIL
             image = Image.open(BytesIO(decoded_image_data))
-            # Resize the image to 458x458
             image = image.resize((458, 458))
-            # Save the cropped image to a file
-            file_path = os.path.join(settings.MEDIA_ROOT, "generated_image")
+
+            # Зберігаємо image
+            filename = "generated_image_{}.jpg".format(int(time.time()))
+            file_path = os.path.join(settings.MEDIA_ROOT, filename)
             image.save(file_path, "JPEG")
 
-            return JsonResponse({"message": "Image generated, cropped, and saved successfully."}, status=200)
+            # Генеруємо image URL
+            image_url = os.path.join(settings.MEDIA_URL, filename)
+
+            # Render response with context
+            context = self.get_context_data(prompt=text_prompt, image_url=image_url)
+            return self.render_to_response(context)
 
         except OpenAIError as e:
             if 'billing_hard_limit_reached' in str(e):
-                return JsonResponse({"error": "Billing limit reached. Please check your OpenAI billing settings."},
-                                    status=402)
+                return JsonResponse({"error": "Billing limit reached. Please check your OpenAI billing settings."}, status=402)
             return JsonResponse({"error": str(e)}, status=500)
         except Exception as e:
+            # Generic error handling
             return JsonResponse({"error": str(e)}, status=500)
