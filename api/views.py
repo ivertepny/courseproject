@@ -1,20 +1,47 @@
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
+from django_filters.rest_framework import DjangoFilterBackend
+from django.contrib.auth import get_user_model
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import filters
 
 from products.models import Product, Basket
 from products.serializers import ProductSerializer, BasketSerializer
+from users.serializers import UserSerializer
+from .authentication import CustomTokenAuthentication
+
+User = get_user_model()
+
+
+class SecureView(APIView):
+    authentication_classes = [CustomTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({"message": "You have accessed a secure endpoint!"})
+
+
+class ProductPagination(PageNumberPagination):
+    page_size = 10  # Set the default page size
 
 
 class ProductModelViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['category', 'price']  # Customize fields based on your Product model
+    search_fields = ['name', 'description']  # Customize based on searchable fields
+    ordering_fields = ['price', 'created_at']  # Customize as needed
+    pagination_class = ProductPagination
 
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             self.permission_classes = [IsAdminUser]
-        return super(ProductModelViewSet, self).get_permissions()
+        return super().get_permissions()
 
 
 class BasketModelViewSet(ModelViewSet):
@@ -39,3 +66,22 @@ class BasketModelViewSet(ModelViewSet):
             return Response(serializer.data, status=status_code)
         except KeyError:
             return Response({'product_id': 'This field is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# User Registration View
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_user(request):
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+        return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# User Logout View
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout_user(request):
+    request.user.auth_token.delete()
+    return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)

@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'django_celery_beat',
+    'storages',
 
     # allAuth
     'allauth',
@@ -262,12 +263,19 @@ RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
 # REST Api
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 3,
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+        # 'path.to.CustomAuthentication',  # Для кастомного методу аутентифікації, треба доробити!!!!!
     ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
+
 # GraphQL
 GRAPHENE = {
     "SCHEMA": "api_graphql.schema.schema"
@@ -283,3 +291,12 @@ ELASTICSEARCH_DSL = {
 # OpenAI
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
+# AWS S3
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_LOCATION = 'static'
+

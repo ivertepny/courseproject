@@ -1,11 +1,11 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm, \
-    PasswordResetForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
 from django import forms
+# from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django_recaptcha.fields import ReCaptchaField
 
 from users.models import User
-from users.tasks import send_email_verification
+from users.tasks import send_email_verification # , send_password_reset_email
 
 
 class FormWithCaptcha(forms.Form):
@@ -87,24 +87,42 @@ class UserPasswordChangeForm(PasswordChangeForm):
                                     widget=forms.PasswordInput(attrs={'class': 'form-input'}))
 
 
-class UserPasswordResetForm(PasswordResetForm):
+# class UserPasswordResetForm(PasswordResetForm):
+#
+#     email = forms.CharField(widget=forms.EmailInput(attrs={
+#         'class': 'form-control py-4', 'placeholder': "Введіть адресу електронної пошти"}))
+#
+#     class Meta:
+#         model = User
+#         fields = ('email',)
+#
+#     def clean(self):
+#         super().clean()  # Call the parent class's clean method
+#         email = self.cleaned_data.get('email')
+#
+#         try:
+#             user = User.objects.get(email=email)
+#             if not user.is_verified_email:
+#                 raise ValidationError("Ваш аккаунт не авторизовано. Будь ласка перевірте свою пошту і авторизуйтесь.")
+#         except User.DoesNotExist:
+#             raise ValidationError("Такого користувача і пароля не існує")
+#
+#         return self.cleaned_data
+#
+#     def save(self,
+#         email_template_name="users/password_reset_form.html", **options):
+#         email = self.cleaned_data.get('email')
+#         user = User.objects.get(email=email)
+#         send_password_reset_email.delay(user.id)
+#         # Call the parent save method
+#         super().save(email_template_name, **options)
 
-    email = forms.CharField(widget=forms.EmailInput(attrs={
-        'class': 'form-control py-4', 'placeholder': "Введіть адресу електронної пошти"}))
 
-    class Meta:
-        model = User
-        fields = ('email',)
 
-    def clean(self):
-        super().clean()  # Call the parent class's clean method
-        email = self.cleaned_data.get('email')
+        # If you have an admin notification mechanism, you could notify here as well
 
-        try:
-            user = User.objects.get(email=email)
-            if not user.is_verified_email:
-                raise ValidationError("Ваш аккаунт не авторизовано. Будь ласка перевірте свою пошту і авторизуйтесь.")
-        except User.DoesNotExist:
-            raise ValidationError("Такого користувача і пароля не існує")
-
-        return self.cleaned_data
+# def save(self, commit=True):
+#     user = super(UserRegistrationForm, self).save(commit=True)
+#     send_email_verification.delay(user.id)
+#     # send_email_verification(user.id)
+#     return user
