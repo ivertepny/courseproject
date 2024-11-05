@@ -17,7 +17,12 @@ def send_telegram():
 
     api = 'https://api.telegram.org/bot'
     method = api + token + '/sendMessage'
-    req = requests.post(method, data={
+    requests.post(method, data={
         'chat_id': chat_id,
         'text': text
     })
+
+# req = requests.post(method, data={
+#         'chat_id': chat_id,
+#         'text': text
+#     })

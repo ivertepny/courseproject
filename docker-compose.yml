@@ -1,13 +1,151 @@
+#Docker Networks
+networks:
+  app-network:
+    name: course-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.15.0.0/24
+
 services:
+  db:
+    image: postgres:17
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    logging:
+      driver: "syslog"
+      options:
+        tag: "course-postgres"
+    networks:
+      - app-network
+
+  redis:
+    image: "redis:alpine"
+    command: redis-server
+    container_name: redis
+    hostname: redis
+    restart: always
+    tty: true
+    environment:
+      - TZ=Europe/Kyiv
+    #    ports:
+    #     - "6379:6379"
+    volumes:
+      - redis-db:/var/lib/redis/
+    logging:
+      driver: "syslog"
+      options:
+        tag: "course-redis"
+    networks:
+      - app-network
+
+  web:
+    build: .
+    ports:
+      - 8000:8000
+    command: "gunicorn postcards_shop.wsgi --bind=0.0.0.0:8000"
+    logging:
+      driver: "syslog"
+      options:
+        tag: "course-web"
+    networks:
+      - app-network
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    restart: always
+    volumes:
+      - .:/app
+
+
+  migrations:
+    build: .
+    command: "python manage.py migrate"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+    restart: "no"
+    volumes:
+      - .:/app
+
+
+  mongo:
+    image: mongo:8.0.3
+    restart: always
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DB_NAME}
+    logging:
+      driver: "syslog"
+      options:
+        tag: "course-mongo"
+    networks:
+      - app-network
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
     volumes:
       - esdata01:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
+#    ports:
+#      - 9200:9200
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+    logging:
+      driver: "syslog"
+      options:
+        tag: "course-elastic"
+    networks:
+      - app-network
+
+
+
+  celery-worker:
+    build: .
+    command: celery -A postcards_shop worker --loglevel=INFO -P gevent
+#    volumes:
+#      - .:/code
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+      - web
+    logging:
+      driver: "syslog"
+      options:
+        tag: "course-celery"
+
+  celery-beat:
+    build: .
+    command: celery -A postcards_shop beat -l info
+
+#    volumes:
+#      - .:/code
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+      - web
+    logging:
+      driver: "syslog"
+      options:
+        tag: "course-celery"
 
 volumes:
-  esdata01:
+  esdata01: 
+  postgres_data: 
+  mongodb_data: 
+  redis-db:

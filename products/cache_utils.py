@@ -10,9 +10,9 @@ def update_popular_products_cache():
         print("No popular products found.")
         return
 
-    # Видаляємо старі записи
-    result = connect_mongo().delete_many({})
-
+    # Видаляємо старі записи з кешу
+    connect_mongo().delete_many({})
+    # result = connect_mongo().delete_many({})
     # Вставляємо нові продукти в кеш
     product_cache = []
     for product in popular_products:
@@ -25,7 +25,7 @@ def update_popular_products_cache():
         })
 
     if product_cache:
-        result = connect_mongo().insert_many(product_cache)
-
+        connect_mongo().insert_many(product_cache)
+    # result = connect_mongo().insert_many(product_cache)
     else:
         print("No products to insert.")

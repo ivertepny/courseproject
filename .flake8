@@ -1,0 +1,8 @@
+[flake8]
+# Exclude the virtualenv directory and the migrations directory
+
+exclude =
+   .venv,
+   migrations,
+
+max-line-length = 130

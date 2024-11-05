@@ -32,7 +32,6 @@ class OrderObjectType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    # hello = graphene.String(default_value="Hi!")
 
     products = DjangoFilterConnectionField(ProductObjectType)
     orders = graphene.List(OrderObjectType)

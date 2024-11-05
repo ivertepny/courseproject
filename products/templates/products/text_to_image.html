@@ -7,15 +7,17 @@
 {% endblock %}
 
 {% block content %}
-
     <div class="container">
-        <h2 class="my-4">Результ генерації для "{{ prompt }}"</h2>
-        <h2 class="my-4">URL "{{ image_url }}"</h2>
-
+        <h2 class="my-4">Результат генерації для "{{ prompt }}"</h2>
+        {% if image_url %}
+            <div class="generated-image">
+                <img src="{{ image_url }}" alt="Generated Image" style="width: 458px; height: 458px;">
+            </div>
+        {% else %}
+            <p>Image generation failed or no image available.</p>
+        {% endif %}
     </div>
-
 {% endblock %}
-
 
 {% block footer %}
     <!-- Footer -->

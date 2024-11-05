@@ -1,0 +1,5 @@
+[run]
+omit =
+    /usr/lib/python*
+    /usr/local/lib/python*
+    /usr/lib64/python*
