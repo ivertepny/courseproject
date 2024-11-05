@@ -111,9 +111,25 @@ services:
 
 
 
-  celery:
+  celery-worker:
     build: .
-    command: celery -A postcards_shop worker --loglevel=INFO -P gevent && celery -A postcards_shop beat -l info
+    command: celery -A postcards_shop worker --loglevel=INFO -P gevent
+#    volumes:
+#      - .:/code
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+      - web
+    logging:
+      driver: "syslog"
+      options:
+        tag: "course-celery"
+
+  celery-beat:
+    build: .
+    command: celery -A postcards_shop beat -l info
 
 #    volumes:
 #      - .:/code
