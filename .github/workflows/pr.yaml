@@ -1,0 +1,33 @@
+name: Pull Request Check
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    name: Deploy to the Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Check code style
+        run: flake8
+      - name: Run migrations
+        run: python manage.py migrate
+#      - name: Run tests
+#        run: coverage run manage.py test
+#      - name: Generate coverage report
+#        run: coverage report --fail-under=80
+      - name: deploy on push
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOYHOST }}
+          username: ${{ secrets.DEPLOYLOGIN }}
+          key: ${{ secrets.DEPLOYKEY }}
+          port: 22
+          script: ${{ github.event.repository.name }}
