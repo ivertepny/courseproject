@@ -96,7 +96,8 @@ WSGI_APPLICATION = 'postcards_shop.wsgi.application'
 # для debug
 INTERNAL_IPS = [
     "127.0.0.1",
-    "localhost"
+    "localhost",
+    "ivertepny.com",
 ]
 
 # Redis
@@ -124,8 +125,8 @@ DATABASES = {
 # MongoDB
 
 MONGO_DB_SETTINGS = {
-    'HOST': '127.0.0.1',
-    'PORT': '27017',
+    'HOST': os.getenv("MONGO_DB_HOST"),
+    'PORT': os.getenv("MONGO_DB_PORT"),
     'DB_NAME': os.getenv("MONGO_DB_NAME"),
     'COLLECTION': os.getenv("MONGO_DB_COLLECTION"),
     'USERNAME': os.getenv("MONGO_DB_USERNAME"),
@@ -290,7 +291,9 @@ GRAPHENE = {
 # Elasticsearch
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'http://localhost:9200'
+        # 'hosts': 'http://localhost:9200'
+        # 'hosts': os.getenv('ELASTICSEARCH_HOST')
+        'hosts': 'http://ivertepny.com:9200'
     },
 }
 
@@ -305,6 +308,9 @@ AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_LOCATION = 'static'
+
+# DEFAULT_FILE_STORAGE = 'hillelDjango4.storages.MediaStorage'
+
 
 
 
