@@ -22,11 +22,12 @@ services:
         tag: "course-postgres"
     networks:
       - app-network
+    container_name: course-db
 
   redis:
     image: "redis:alpine"
     command: redis-server
-    container_name: redis
+    container_name: course-redis
     hostname: redis
     restart: always
     tty: true
@@ -63,6 +64,7 @@ services:
     restart: always
     volumes:
       - .:/app
+    container_name: course-web
 
 
   migrations:
@@ -92,6 +94,7 @@ services:
         tag: "course-mongo"
     networks:
       - app-network
+    container_name: course-mongo
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
@@ -108,6 +111,7 @@ services:
         tag: "course-elastic"
     networks:
       - app-network
+    container_name: course-elastic
 
 
 
@@ -126,6 +130,7 @@ services:
       driver: "syslog"
       options:
         tag: "course-celery"
+    container_name: course-celery-worker
 
   celery-beat:
     build: .
@@ -143,6 +148,7 @@ services:
       driver: "syslog"
       options:
         tag: "course-celery"
+    container_name: course-celery-beat
 
 volumes:
   esdata01: 
