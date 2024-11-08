@@ -322,7 +322,7 @@ AWS_LOCATION = 'static'
 AWS_S3_REGION_NAME = 'us-east-1'
 
 # AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{AWS_LOCATION}/'
 
 
 # DEFAULT_FILE_STORAGE = 'hillelDjango4.storages.MediaStorage'
