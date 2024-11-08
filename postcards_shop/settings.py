@@ -195,7 +195,7 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # робота з e-mail
-DOMAIN_NAME = 'http://localhost:8000'
+DOMAIN_NAME = 'http://ivertepny.com:8000'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # if DEBUG:
