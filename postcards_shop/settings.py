@@ -277,8 +277,8 @@ GRAPHENE = {
 ELASTICSEARCH_DSL = {
     'default': {
         # 'hosts': 'http://localhost:9200'
-        # 'hosts': os.getenv('ELASTICSEARCH_HOST')
-        'hosts': 'http://ivertepny.com:9200'
+        'hosts': os.getenv('ELASTICSEARCH_HOST')
+        # 'hosts': 'http://ivertepny.com:9200'
     },
 }
 
@@ -304,19 +304,19 @@ AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIAFILES_LOCATION = 'media'
 
 if DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR / 'static',
-    ]
+        ]
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
 
 else:
     STATIC_ROOT = BASE_DIR / 'static'
-
-
-# Додаємо медіафайли
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    # MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
 
 
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -326,8 +326,7 @@ CSRF_TRUSTED_ORIGINS = ['https://ivertepny.com', 'http://ivertepny.com']
 # AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{AWS_LOCATION}/'
 
-MEDIAFILES_LOCATION = 'media'
+
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
 
-# DEFAULT_FILE_STORAGE = 'hillelDjango4.storages.MediaStorage'
