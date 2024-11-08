@@ -277,8 +277,8 @@ GRAPHENE = {
 ELASTICSEARCH_DSL = {
     'default': {
         # 'hosts': 'http://localhost:9200'
-        'hosts': os.getenv('ELASTICSEARCH_HOST')
-        # 'hosts': 'http://ivertepny.com:9200'
+        # 'hosts': os.getenv('ELASTICSEARCH_HOST')
+        'hosts': f"http://{os.getenv('ELASTICSEARCH_HOST')}:{os.getenv('ELASTICSEARCH_PORT')}"
     },
 }
 
