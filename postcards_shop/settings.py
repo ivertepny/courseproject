@@ -326,7 +326,3 @@ STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{AWS_LOCATION}
 
 
 # DEFAULT_FILE_STORAGE = 'hillelDjango4.storages.MediaStorage'
-
-
-
-
