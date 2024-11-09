@@ -1,5 +1,5 @@
 body {
-    background: url("../img/wallpaper.jpg") no-repeat center top fixed;
+    background: url("https://postcards-s3-static.s3.us-east-1.amazonaws.com/static/vendor/img/wallpaper.jpg") no-repeat center top fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
