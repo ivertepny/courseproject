@@ -140,8 +140,8 @@ services:
   stripe-listener:
     image: stripe/stripe-cli
     command: ["listen", "--forward-to", "http://web:8000/webhook/stripe/"]
-    environment:
-      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET} # Optional: add your Stripe secret if required for testing
+#    environment:
+#      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET} # Optional: add your Stripe secret if required for testing
     depends_on:
       - web
     networks:
