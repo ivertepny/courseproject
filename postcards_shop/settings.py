@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'django_celery_beat',
+    'django_filters',
     'storages',
 
     # allAuth
@@ -179,7 +180,10 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # робота з e-mail
-DOMAIN_NAME = 'http://ivertepny.com:8000'
+if DEBUG:
+    DOMAIN_NAME = 'http://localhost:8000'
+else:
+    DOMAIN_NAME = 'https://ivertepny.com'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # if DEBUG:
@@ -205,6 +209,16 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
     # 'social_core.backends.google.GoogleOAuth2',
 ]
+
+# для кастомної аутентифікації
+
+# AUTHENTICATION_BACKENDS = [
+#     'users.auth_backend.EmailOrUsernameAuthBackend',  # custom backend
+#     'django.contrib.auth.backends.ModelBackend',      # Default backend
+# ]
+
+
+
 
 SITE_ID = 1  # GitHub+Google
 
@@ -245,6 +259,7 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 STRIPE_PUBLIC_KEY = os.getenv('MY_STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = os.getenv('MY_STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = os.getenv('MY_STRIPE_WEBHOOK_SECRET')
+STRIPE_DEVICE_NAME = os.getenv('MY_STRIPE_DEVICE_NAME')
 
 # ReCAPTCHA
 
