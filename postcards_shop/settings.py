@@ -3,6 +3,7 @@ from pathlib import Path
 from django.conf.global_settings import STATIC_ROOT
 from dotenv import load_dotenv  # Для файла конфігурації .env
 import os  # Для файла конфігурації .env
+from .storages import MediaStorage, StaticStorage
 
 load_dotenv()  # Завантаження файлу конфігурвції DB
 
