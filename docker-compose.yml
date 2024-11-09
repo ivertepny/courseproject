@@ -143,7 +143,7 @@ services:
     env_file:
       - ./.env
     environment:
-      STRIPE_API_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_API_KEY: ${MY_STRIPE_SECRET_KEY}
 
     depends_on:
       - web
