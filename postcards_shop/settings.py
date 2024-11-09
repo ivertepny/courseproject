@@ -3,7 +3,6 @@ from pathlib import Path
 from django.conf.global_settings import STATIC_ROOT
 from dotenv import load_dotenv  # Для файла конфігурації .env
 import os  # Для файла конфігурації .env
-from .storages import MediaStorage, StaticStorage
 
 load_dotenv()  # Завантаження файлу конфігурвції DB
 
@@ -331,7 +330,7 @@ else:
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
 
-DEFAULT_FILE_STORAGE = 'postcards_shop.storage_backends.MediaStorage'
-STATICFILES_STORAGE = 'postcards_shop.storage_backends.StaticStorage'
+DEFAULT_FILE_STORAGE = 'postcards_shop.storages.MediaStorage'
+STATICFILES_STORAGE = 'postcards_shop.storages.StaticStorage'
 
 
