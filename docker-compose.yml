@@ -141,7 +141,7 @@ services:
     image: stripe/stripe-cli
     command: ["listen", "--forward-to", "http://web:8000/webhook/stripe/"]
     environment:
-      - STRIPE_WEBHOOK_SECRET='whsec_711e349e32b25c4cde3b71a20a47dd77f419e1d28808867f32fe977d89767a14'
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
     depends_on:
       - web
     networks:
