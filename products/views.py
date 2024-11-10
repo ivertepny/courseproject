@@ -170,8 +170,10 @@ class TextToImageView(TemplateView):
 
             # Зберігаємо image
             filename = "generated_image_{}.jpg".format(int(time.time()))
-            file_path = os.path.join(settings.DEFAULT_FILE_STORAGE, filename)
+            # file_path = os.path.join(settings.DEFAULT_FILE_STORAGE, filename)
+            file_path = os.path.join(settings.MEDIA_ROOT, filename)
             image.save(file_path, "JPEG")
+
 
             # Генеруємо image URL
             image_url = os.path.join(settings.MEDIA_URL, filename)
