@@ -122,7 +122,7 @@ services:
         tag: "course-celery"
     container_name: course-celery-worker
     environment:
-      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379
 
   celery-beat:
     build: .
@@ -139,7 +139,7 @@ services:
         tag: "course-celery"
     container_name: course-celery-beat
     environment:
-      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379
 
   stripe-listener:
     image: stripe/stripe-cli
