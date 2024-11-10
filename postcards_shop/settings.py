@@ -120,6 +120,9 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),
         "PORT": os.getenv("DB_PORT"),
+        'TEST': {
+            'NAME': 'test',  # A separate database name for testing
+        },
     }
 }
 
@@ -131,6 +134,9 @@ if os.getenv('USE_SQLITE') and os.getenv('USE_SQLITE').lower() == 'true':
             # SQLite
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
+            'TEST': {
+                'NAME': 'test',  # A separate database name for testing
+            },
         }
     }
 
