@@ -179,12 +179,12 @@ LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+if DEBUG:
+    DOMAIN_NAME = 'http://localhost:8000'
+else:
+    DOMAIN_NAME = 'https://ivertepny.com'
+
 # робота з e-mail
-# if DEBUG:
-#     DOMAIN_NAME = 'http://localhost:8000'
-# else:
-#     DOMAIN_NAME = 'http://ivertepny.com'
-DOMAIN_NAME = 'http://ivertepny.com'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # if DEBUG:
 #     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
