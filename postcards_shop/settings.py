@@ -179,10 +179,7 @@ LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-if DEBUG:
-    DOMAIN_NAME = 'http://localhost:8000'
-else:
-    DOMAIN_NAME = 'https://ivertepny.com'
+DOMAIN_NAME = os.getenv('DOMAIN_NAME')
 
 # робота з e-mail
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -271,7 +268,7 @@ RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
         # 'path.to.CustomAuthentication',  # Для кастомного методу аутентифікації, треба доробити!!!!!
