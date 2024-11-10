@@ -1,22 +1,17 @@
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
-from rest_framework import status, filters, permissions, generics
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+from rest_framework import status, permissions, generics
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from django_filters.rest_framework import DjangoFilterBackend
-from django.contrib.auth import get_user_model, authenticate, login, update_session_auth_hash, logout
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from rest_framework.pagination import PageNumberPagination
 
 from orders.models import Order
 from products.models import Product, Basket
 from products.serializers import ProductSerializer, BasketSerializer
 from orders.serializers import OrderSerializer
-from users.models import EmailVerification
-from users.serializers import UserSerializer, UserRegistrationSerializer, UserProfileSerializer
-from .authentication import CustomTokenAuthentication
+from users.serializers import UserSerializer, UserRegistrationSerializer
 
 User = get_user_model()
 

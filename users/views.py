@@ -1,17 +1,13 @@
 from django.contrib import messages
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
+from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
-# from django.contrib.auth.views import PasswordResetConfirmView
-# from django.utils.http import urlsafe_base64_decode
-# from django.utils.encoding import force_str
 
-from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, \
-    UserPasswordChangeForm #, CustomAuthenticationForm  # , UserPasswordResetForm
+from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, UserPasswordChangeForm
 from users.models import User, EmailVerification
 from common.views import TitleMixin
 
@@ -92,7 +88,6 @@ class UserPasswordChange(TitleMixin, PasswordChangeView):
         response = super().form_valid(form)
         update_session_auth_hash(self.request, form.user)  # Оновлюємо сесію, щоб залишити користувача авторизованим
         return response
-
 
 # для кастомної аутентифікації
 

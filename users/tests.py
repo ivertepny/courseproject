@@ -30,28 +30,6 @@ class UserRegistrationViewTest(TestCase):
         self.assertTemplateUsed(response, 'users/registration.html')
         self.assertIsInstance(response.context_data['form'], UserRegistrationForm)
 
-    # def test_user_registration_post_success(self):  # Error
-    #     username = self.data['username']
-    #     self.assertFalse(User.objects.filter(username=username).exists())
-    #     response = self.client.post(self.path, self.data)
-    #
-    #     # check creating of user
-    #     # self.assertEqual(response.status_code, 200)
-    #     # self.assertRedirects(response, expected_url=reverse('users:login'))
-    #     # self.assertTrue(User.objects.filter(username=username).exists())
-    #     # check creating of user object
-    #
-    #     # self.assertTrue(User.objects.filter(username=username).exists())
-    #     self.assertEqual(response.url, reverse('users:login'))
-    #
-    #     # check creating e-mail verification
-    #     email_verification = EmailVerification.objects.filter(user__username=username)
-    #     self.assertTrue(email_verification.exists())
-    #     self.assertEqual(
-    #         email_verification.first().expiration.date(),
-    #         (now() + timedelta(minutes=10)).date()
-    #     )
-
     def test_user_registration_post_failure(self):  # OK
         username = self.data['username']
         # user = User.objects.create_user(username=username)

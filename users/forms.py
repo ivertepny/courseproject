@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django_recaptcha.fields import ReCaptchaField
 
 from users.models import User
-from users.tasks import send_email_verification # , send_password_reset_email
+from users.tasks import send_email_verification  # , send_password_reset_email
 
 
 class FormWithCaptcha(forms.Form):
@@ -86,11 +86,9 @@ class UserPasswordChangeForm(PasswordChangeForm):
     new_password2 = forms.CharField(label="Підтвердження пароля",
                                     widget=forms.PasswordInput(attrs={'class': 'form-input'}))
 
-
 # для кастомної аутентифікації
 # class CustomAuthenticationForm(AuthenticationForm):
 #     username = forms.CharField(label="Username or Email", max_length=254)
-
 
 
 # class UserPasswordResetForm(PasswordResetForm):
@@ -124,8 +122,7 @@ class UserPasswordChangeForm(PasswordChangeForm):
 #         super().save(email_template_name, **options)
 
 
-
-        # If you have an admin notification mechanism, you could notify here as well
+# If you have an admin notification mechanism, you could notify here as well
 
 # def save(self, commit=True):
 #     user = super(UserRegistrationForm, self).save(commit=True)

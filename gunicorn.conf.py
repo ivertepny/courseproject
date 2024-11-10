@@ -28,4 +28,3 @@ preload_app = True
 # Timeout for workers to complete a request (in seconds).
 # If exceeded, the worker is killed and restarted.
 timeout = 30
-

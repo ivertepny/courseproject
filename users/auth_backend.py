@@ -10,6 +10,7 @@ class EmailOrUsernameAuthBackend(BaseBackend):
         if not email:
             raise ValidationError('Email is required')
         return email
+
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:
             # Try to fetch the user by username or email

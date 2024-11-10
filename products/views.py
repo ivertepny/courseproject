@@ -174,7 +174,6 @@ class TextToImageView(TemplateView):
             file_path = os.path.join(settings.MEDIA_ROOT, filename)
             image.save(file_path, "JPEG")
 
-
             # Генеруємо image URL
             image_url = os.path.join(settings.MEDIA_URL, filename)
 
@@ -184,7 +183,8 @@ class TextToImageView(TemplateView):
 
         except OpenAIError as e:
             if 'billing_hard_limit_reached' in str(e):
-                return JsonResponse({"error": "Billing limit reached. Please check your OpenAI billing settings."}, status=402)
+                return JsonResponse({"error": "Billing limit reached. Please check your OpenAI billing settings."},
+                                    status=402)
             return JsonResponse({"error": str(e)}, status=500)
         except Exception as e:
             # Generic error handling

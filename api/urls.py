@@ -7,15 +7,12 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.authtoken.views import obtain_auth_token
 
-
-
 app_name = 'api'  # Не зрозумів для чого
 
 router = routers.DefaultRouter()
 router.register(r'products', ProductModelViewSet)
 router.register(r'orders', OrderModelViewSet)
 router.register(r'baskets', BasketModelViewSet)
-
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -41,4 +38,3 @@ urlpatterns = [
     path('user/registration/', UserRegistrationAPIView.as_view(), name='api_register'),
 
 ]
-

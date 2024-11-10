@@ -1,9 +1,8 @@
 from rest_framework import serializers
 from rest_framework import fields
 
-from orders.models import Order
 from users.models import User
-from products.models import Product, ProductCategory, Tag, Basket
+from products.models import Product, Basket
 
 user = User.objects.first()
 

@@ -6,6 +6,7 @@ from users.models import User
 
 user = User.objects.first()
 
+
 # OrderViewSerializer
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -15,5 +16,3 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'initiator', 'basket_history')
-
-

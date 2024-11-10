@@ -2,6 +2,7 @@ from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.models import User
 
+
 class CustomTokenAuthentication(BaseAuthentication):
     def authenticate(self, request):
         token = request.headers.get("X-Custom-Token")
