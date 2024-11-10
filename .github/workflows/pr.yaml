@@ -15,14 +15,14 @@ jobs:
 #      - uses: actions/checkout@v2
 #      - name: Install dependencies
 #        run: pip install -r requirements.txt
-#      - name: Check code style
-#        run: flake8
+      - name: Check code style
+        run: flake8
 #      - name: Run migrations
 #        run: python manage.py migrate
-#      - name: Run tests
-#        run: coverage run manage.py test
-#      - name: Generate coverage report
-#        run: coverage report --fail-under=80
+      - name: Run tests
+        run: coverage run manage.py test
+      - name: Generate coverage report
+        run: coverage report --fail-under=80
       - name: deploy on push
         uses: appleboy/ssh-action@master
         with:
