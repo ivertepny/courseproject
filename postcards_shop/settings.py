@@ -123,6 +123,18 @@ DATABASES = {
     }
 }
 
+# SQLite DB (for testing)
+SQLITE_DB = None
+if os.getenv('USE_SQLITE') and os.getenv('USE_SQLITE').lower() == 'true':
+    SQLITE_DB = {
+        'default': {
+            # SQLite
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+
 # MongoDB
 
 MONGO_DB_SETTINGS = {
