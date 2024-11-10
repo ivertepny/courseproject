@@ -1,17 +1,44 @@
 from rest_framework import serializers
 from rest_framework import fields
 
+from orders.models import Order
+from users.models import User
 from products.models import Product, ProductCategory, Tag, Basket
 
+user = User.objects.first()
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('id', 'name')
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('name',)
+
+
+# ProductSerializer
 
 class ProductSerializer(serializers.ModelSerializer):
-    category = serializers.SlugRelatedField(slug_field='name', queryset=ProductCategory.objects.all())
-    tags = serializers.SlugRelatedField(slug_field='name', queryset=Tag.objects.all(), many=True)
+    category = CategorySerializer()
+    tags = TagSerializer(many=True)
+
+    # display_name = serializers.SerializerMethodField()
+
+    # def get_display_name(self, obj: Product):
+    #     display_name = obj.name
+    #
+    #     return display_name
 
     class Meta:
         model = Product
         fields = ('id', 'name', 'description', 'price', 'quantity', 'category', 'tags')
 
+
+# BasketSerializer
 
 class BasketSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
@@ -21,11 +48,11 @@ class BasketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Basket
-        fields = ('id', 'product', 'quantity', 'created_timestamp', 'sum', 'total_sum', 'total_quantity')
+        fields = ('id', 'product', 'quantity', 'sum', 'total_sum', 'total_quantity', 'created_timestamp')
         read_only_fields = ('created_timestamp',)
 
     def get_total_sum(self, obj):
-        return Basket.objects.filter(user_id=obj.user_id).total_sum()
+        return Basket.objects.filter(user_id=obj.user.id).total_sum()
 
     def get_total_quantity(self, obj):
-        return Basket.objects.filter(user_id=obj.user_id).total_quantity()
+        return Basket.objects.filter(user_id=obj.user.id).total_quantity()

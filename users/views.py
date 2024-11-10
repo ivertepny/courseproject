@@ -11,7 +11,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 # from django.utils.encoding import force_str
 
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm, \
-    UserPasswordChangeForm  # , UserPasswordResetForm
+    UserPasswordChangeForm #, CustomAuthenticationForm  # , UserPasswordResetForm
 from users.models import User, EmailVerification
 from common.views import TitleMixin
 
@@ -92,6 +92,18 @@ class UserPasswordChange(TitleMixin, PasswordChangeView):
         response = super().form_valid(form)
         update_session_auth_hash(self.request, form.user)  # Оновлюємо сесію, щоб залишити користувача авторизованим
         return response
+
+
+# для кастомної аутентифікації
+
+# class UserLoginView(TitleMixin, LoginView):
+#     template_name = 'users/login.html'
+#     form_class = CustomAuthenticationForm
+#     title = 'Store - Авторизація'
+#
+
+
+# скидання пароля
 
 # class UserPasswordReset(TitleMixin, PasswordResetView):
 #     title = 'Store - Скидання пароля'

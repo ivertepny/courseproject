@@ -87,6 +87,12 @@ class UserPasswordChangeForm(PasswordChangeForm):
                                     widget=forms.PasswordInput(attrs={'class': 'form-input'}))
 
 
+# для кастомної аутентифікації
+# class CustomAuthenticationForm(AuthenticationForm):
+#     username = forms.CharField(label="Username or Email", max_length=254)
+
+
+
 # class UserPasswordResetForm(PasswordResetForm):
 #
 #     email = forms.CharField(widget=forms.EmailInput(attrs={
