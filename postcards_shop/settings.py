@@ -112,7 +112,7 @@ CACHES = {
 
 # DB Postgres
 
-DATABASES = {
+LOCAL_DB = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",  # Рекомендують psycopg2#
         "NAME": os.getenv("DB_NAME"),
@@ -138,6 +138,7 @@ if os.getenv('USE_SQLITE') and os.getenv('USE_SQLITE').lower() == 'true':
         }
     }
 
+DATABASES = SQLITE_DB or LOCAL_DB
 
 # MongoDB
 
