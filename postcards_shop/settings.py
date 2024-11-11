@@ -233,11 +233,11 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 1  # GitHub+Google
 
 SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        'SCOPE': [
-            'user',
-        ],
-    },
+    # 'github': {
+    #     'SCOPE': [
+    #         'user',
+    #     ],
+    # },
     "google": {
 
         "SCOPE": [
